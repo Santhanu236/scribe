@@ -1,6 +1,7 @@
+<% user=session[:user_id] %>
 <nav class="navbar fixed-top navbar-expand-md navbar-dark liquid" id="navbarc">
     <a href="/home" class="navbar-brand mb-0">
-        <%= image_tag('scribe-logo-dark.png',alt: "logo" , id: "logo-img" , class: "d-inline-block align-top" ) %>
+        <%= image_tag('logo-main-light.png',alt: "logo" , id: "logo-img" , class: "d-inline-block align-top" ) %>
     </a>
     <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" class="navbar-toggler"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,7 +10,7 @@
     <div class="collapse navbar-collapse h-100 d-flex align-items-center justify-content-center" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a href="/home" class="nav-link active" id="home-tab"><i class="fa-solid fa-house-chimney"></i>  Home</a>
+                <a href="/home" class="nav-link active" id="home-tab"><i class="fa-solid fa-house-chimney"></i> Home</a>
             </li>
             <li class="nav-item active">
                 <a href="/my_blogs" class="nav-link" id="my-blogs-tab">My blogs</a>
@@ -20,37 +21,48 @@
         </ul>
     </div>
     <div class="form-check form-switch">
-        <label for="dark-mode">Dark mode</label>
-        <input type="checkbox" name="dark-mode" class="form-check-input" id="darkSwitch">
+        <i class="fa-solid fa-sun text-white" id="dm-icon"></i>
+        <input type="checkbox" name="dark-mode" class="form-check-input" id="darkSwitch" >
     </div>
 
     <div class="dropdown">
         <a class="btn-secondary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            <i class="fa-solid fa-user" id="user-profile-top"></i>
+            <% if user['img_url']['url'].nil? %>
+            <i class="fa-solid fa-circle-user" id="user-profile-top"></i>
+            <% else %>
+            <div class="user-avatar-div">
+            <img src="<%= user['img_url']['url'] %>" alt="user-avatar-top" class="user-avatar">
+            </div>
+            <% end %>
         </a>
         <div class="dropdown-menu position-absolute top-25 end-0" aria-labelledby="dropdownMenuLink">
-            <% user = session[:user_id] %>
-            <p class="lead dropdown-item" style="color: gray;"><%= user["first_name"] %></p>
-            <a class="dropdown-item" href="/my_account"><i class="fa-solid fa-user"></i> &nbsp; My Account</a>
-            <a class="dropdown-item" href="#"><i class="fa-solid fa-bug"></i>&nbsp; Report</a>
-            <a class="dropdown-item" href="#"><i class="fa-solid fa-comment"></i> &nbsp; Feedback</a>
-            <a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket"></i>&nbsp;     Log out</a>
+
+                <p class="dropdown-item">Signed in as</p>
+                <p class="lead dropdown-item" style="color: gray;">
+                    <%= user["first_name"] + " " + user["last_name"] %>
+                </p>
+                <a class="dropdown-item" href="/my_account"><i class="fa-solid fa-user"></i> &nbsp; My Account</a>
+                <a class="dropdown-item" href="#"><i class="fa-solid fa-bug"></i>&nbsp; Report</a>
+                <a class="dropdown-item" href="#"><i class="fa-solid fa-comment"></i> &nbsp; Feedback</a>
+                <a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket"></i>&nbsp; Log out</a>
         </div>
     </div>
-
 </nav>
 
 <div class="row" id="home-search-panel">
-    <div class="col-2"><a class="btn" id="new-blog-btn" href="/create_new_blog" role="button"><i class="fa-solid fa-plus"></i> &nbsp; New Blog</a></div>
+    <div class="col-2"><a class="btn" id="new-blog-btn" href="/new_post" role="button"><i
+                class="fa-solid fa-plus"></i> &nbsp; New Post</a></div>
     <div class="col-6">
         <form>
             <div class="row  align-items-center">
                 <div class="col">
-                    <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search Blogs here">
+                    <input class="form-control form-control-lg form-control-borderless" type="search"
+                        placeholder="Search Blogs here">
                 </div>
                 <div class="col-auto">
-                    <a href="#" class="btn" id="home-search-btn"><i class="fa-solid fa-magnifying-glass"></i>&nbsp; Search</a>
+                    <a href="#" class="btn" id="home-search-btn"><i class="fa-solid fa-magnifying-glass"></i>&nbsp;
+                        Search</a>
                 </div>
             </div>
         </form>
@@ -59,7 +71,8 @@
         <form>
             <div class="row  align-items-center">
                 <div class="col">
-                    <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Filter">
+                    <input class="form-control form-control-lg form-control-borderless" type="search"
+                        placeholder="Filter">
                 </div>
                 <div class="col-auto">
                     <a href="#" class="btn" id="home-search-btn"><i class="fa-solid fa-filter"></i>&nbsp; Filter</a>
@@ -69,14 +82,57 @@
     </div>
 </div>
 
-<div style="height: 2000px; width:300px;">
+<% Blog.all.map do |cur_blog| %>
+<% blog_own = User.find(cur_blog["users_id"]) %>
+<div class="container" id="home-blog-main-div">
+    <div class="container blog-sub-div" >
+        <div class="d-inline-flex mr-3">
+            <% if blog_own["img_url"].nil? %>
+            <i class="fa-solid fa-circle-user" id="user-profile-top"></i>
+            <% else %>
+            <% blog_own_img = "/uploads/user/img_url/" + blog_own["id"].to_s + "/" + blog_own["img_url"] %>
+            <div class="user-avatar-div"><img src="<%= blog_own_img %>" class="blog-user-img user-avatar" alt="User"></div>
+            <% end %>
 
+            <p class="blog-user-name"> <%= blog_own["first_name"]+" "+ blog_own["last_name"] %> </p>
+        </div> <br>
+        <div class="d-inline-flex blog-time-div">
+            <% blog_date = cur_blog["updated_at"] %>
+            <i class="fa-solid fa-clock-rotate-left" style="color: gray;font-size: 13px;"></i><p class="blog-timestamp"><%= blog_date %></p>
+        </div>
+        <div class="d-flex justify-content-center">
+            <p class="blog-title"> <%= cur_blog["title"] %> </p>
+        </div>
+        <div class="blog-content-div">
+            <p class="blog-content">
+                <%= cur_blog["text"] %>
+            </p>
+        </div> <br>
+        <% img_path = "/uploads/blog/img_url/" + cur_blog["id"].to_s + "/" + cur_blog["img_url"] %>
+        <div class="col d-flex justify-content-center">
+            <img src="<%= img_path %>" alt="blog-img" class="blog-img">
+        </div> <br>
+
+        <div class="blog-btns-div row">
+            <div class="col-1"><button class="btn-c" type="button"><i class="fa-solid fa-heart text-danger"></i>&nbsp; Like</button></div>
+            <div class="col-1"><p class="blog-likes">12,563 likes</p></div>
+            <div class="col-7"></div>
+            <div class="col-3">
+                <button class="btn-c" type="button"><i class="fa-solid fa-comment"></i>&nbsp;Comment</button>
+                <button class="btn-c" type="button"><i class="fa-solid fa-share-nodes"></i> &nbsp;Share</button>
+                <a href="/save_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><i class="fa-solid fa-bookmark"></i>&nbsp; Save</button></a>
+            </div>
+        </div>
+    </div>
 </div>
+
+<% end %>
+
 
 <%= javascript_pack_tag 'home.js' %>
 
-<script>
-    $(document).ready(function () {
-        $('.dropdown-toggle').dropdown()
-    });
-</script>
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-toggle').dropdown()
+        });
+    </script>

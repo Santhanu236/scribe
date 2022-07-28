@@ -2,13 +2,22 @@
     height: 40px;
     width: auto;
 }
-#user-profile{
+.btn-c {
+    background-color: #7a86b6d7;
+    border: none;
     height: 40px;
-    width: auto;
+    width: fit-content;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    color: white;
+}
+.red-btn{
+    background-color: rgb(183, 0, 0);
 }
 // custom bootstrap code:
 #navbarc{
-    background-color: rgba(122, 134, 182, 0.844);
+    background-color: #7a86b6d7;
     padding-left: 120px;
     padding-right: 120px;
     position: sticky;
@@ -24,11 +33,22 @@
 #user-profile-top{
     margin-left: 10px;
     color: white;
-    font-size: 30px;
+    font-size: 40px;
+}
+.user-avatar-div{
+    margin-left: 20px;
+    overflow: hidden;
+    border-radius: 100%;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+}
+.user-avatar {
+    height: 40px;
 }
 // login
 .background-radial-gradient {
-    background-color: hsl(218, 41%, 15%);
+    background-color: #172236;
     background-image: radial-gradient(650px circle at 0% 0%,
         hsl(218, 41%, 35%) 15%,
         hsl(218, 41%, 30%) 35%,
@@ -80,4 +100,66 @@
     height: auto;
     background-color: rgba(122, 134, 182, 0.844);
     color: white;
+}
+
+//blog-main-content
+#home-blog-main-div {
+    width: 100%;
+    padding: 15px;
+}
+.blog-sub-div{
+    padding: 15px;
+    background-color: #eeeeee;
+    color: black;
+    height: fit-content;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.blog-sub-div-dark{
+    padding: 15px;
+    background-color: #242424;
+    color: white;
+    height: fit-content;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.blog-user-profile{
+    color: rgb(89, 203, 248);
+    font-size: 40px;
+}
+.blog-user-img{
+    height: 40px;
+}
+.blog-user-name{
+    font-size: 20px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.blog-time-div{
+    margin-left: 4.75%;
+}
+.blog-timestamp{
+    margin-top: -4px;
+    font-size: 13px;
+    color: gray;
+    margin-left: 5px;
+}
+.blog-title{
+    font-size: 20px;
+}
+.blog-img{
+    border-radius: 5px;
+    height: 500px;
+    width: auto;
+}
+.blog-content-div{
+    padding-left: 50px;
+    padding-right: 50px;
+}
+.blog-content{
+    font-size: 15px;
+}
+.blog-likes{
+    margin-top: 7px;
+    margin-left: -20px;
 }

@@ -30,4 +30,8 @@ class HomeController < ApplicationController
     def my_account
         render "blog/my_account"
     end
+
+    def new_blog
+        render "blog/create_blog"
+    end
 end

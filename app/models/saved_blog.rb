@@ -1,0 +1,2 @@
+class SavedBlog < ApplicationRecord
+end

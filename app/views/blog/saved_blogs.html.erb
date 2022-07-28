@@ -1,6 +1,10 @@
-<nav class="navbar fixed-top navbar-expand-md navbar-dark" id="navbarc">
-    <a href="/home" class="navbar-brand mb-0"><%= image_tag('logo.png',alt: "logo", id: "logo-img", class: "d-inline-block align-top") %></a>
-    <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" class="navbar-toggler" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+<% user=session[:user_id] %>
+<nav class="navbar fixed-top navbar-expand-md navbar-dark liquid" id="navbarc">
+    <a href="/home" class="navbar-brand mb-0">
+        <%= image_tag('logo-main-light.png',alt: "logo" , id: "logo-img" , class: "d-inline-block align-top" ) %>
+    </a>
+    <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" class="navbar-toggler"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse h-100 d-flex align-items-center justify-content-center" id="navbarNav">
@@ -17,28 +21,89 @@
         </ul>
     </div>
     <div class="form-check form-switch">
-        <input type="checkbox" class="form-check-input" id="darkSwitch">
+        <i class="fa-solid fa-sun text-white" id="dm-icon"></i>
+        <input type="checkbox" name="dark-mode" class="form-check-input" id="darkSwitch">
     </div>
+
     <div class="dropdown">
-        <a class="btn-secondary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="bi bi-person-fill" style="font-size: 30px;"></i>
+        <a class="btn-secondary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <% if user['img_url']['url'].nil? %>
+            <i class="fa-solid fa-circle-user" id="user-profile-top"></i>
+            <% else %>
+            <div class="user-avatar-div">
+            <img src="<%= user['img_url']['url'] %>" alt="user-avatar-top" class="user-avatar">
+            </div>
+            <% end %>
         </a>
         <div class="dropdown-menu position-absolute top-25 end-0" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-            <a class="dropdown-item" href="/logout">log out</a>
-          </div>
+
+                <p class="dropdown-item">Signed in as</p>
+                <p class="lead dropdown-item" style="color: gray;">
+                    <%= user["first_name"] + " " + user["last_name"] %>
+                </p>
+                <a class="dropdown-item" href="/my_account"><i class="fa-solid fa-user"></i> &nbsp; My Account</a>
+                <a class="dropdown-item" href="#"><i class="fa-solid fa-bug"></i>&nbsp; Report</a>
+                <a class="dropdown-item" href="#"><i class="fa-solid fa-comment"></i> &nbsp; Feedback</a>
+                <a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket"></i>&nbsp; Log out</a>
+        </div>
     </div>
 </nav>
 
+<% SavedBlog.where(users_id: user["id"]).map do |saved| %>
+<% cur_saved = saved["blogs_id"] %>
+<% cur_blog = Blog.find(cur_saved) %>
+
+<% blog_own = User.find(cur_blog["users_id"]) %>
+<div class="container" id="home-blog-main-div">
+    <div class="container blog-sub-div" >
+        <div class="d-inline-flex mr-3">
+            <% if blog_own["img_url"].nil? %>
+            <i class="fa-solid fa-circle-user" id="user-profile-top"></i>
+            <% else %>
+            <% blog_own_img = "/uploads/user/img_url/" + blog_own["id"].to_s + "/" + blog_own["img_url"] %>
+            <div class="user-avatar-div"><img src="<%= blog_own_img %>" class="blog-user-img user-avatar" alt="User"></div>
+            <% end %>
+
+            <p class="blog-user-name"> <%= blog_own["first_name"]+" "+ blog_own["last_name"] %> </p>
+        </div> <br>
+        <div class="d-inline-flex blog-time-div">
+            <% blog_date = cur_blog["updated_at"] %>
+            <i class="fa-solid fa-clock-rotate-left" style="color: gray;font-size: 13px;"></i><p class="blog-timestamp"><%= blog_date %></p>
+        </div>
+        <div class="d-flex justify-content-center">
+            <p class="blog-title"> <%= cur_blog["title"] %> </p>
+        </div>
+        <div class="blog-content-div">
+            <p class="blog-content">
+                <%= cur_blog["text"] %>
+            </p>
+        </div> <br>
+        <% img_path = "/uploads/blog/img_url/" + cur_blog["id"].to_s + "/" + cur_blog["img_url"] %>
+        <div class="col d-flex justify-content-center">
+            <img src="<%= img_path %>" alt="blog-img" class="blog-img">
+        </div> <br>
+
+        <div class="blog-btns-div row">
+            <div class="col-1"><button class="btn-c" type="button"><i class="fa-solid fa-heart text-danger"></i>&nbsp; Like</button></div>
+            <div class="col-1"><p class="blog-likes">12,563 likes</p></div>
+            <div class="col-7"></div>
+            <div class="col-3">
+                <button class="btn-c" type="button"><i class="fa-solid fa-comment"></i>&nbsp;Comment</button>
+                <button class="btn-c" type="button"><i class="fa-solid fa-share-nodes"></i> &nbsp;Share</button>
+                <a href="/delete_saved_blog/<%= cur_blog['id'] %>"><button class="btn-c red-btn" type="button"><i class="fa-solid fa-trash"></i> Remove</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% end %>
 
 
 
 
 <%= javascript_pack_tag 'home.js' %>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
 <script>
 
      $(document).ready(function(){

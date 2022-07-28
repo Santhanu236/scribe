@@ -15,7 +15,7 @@
 
           <div class="card bg-glass">
             <div class="card-body px-4 py-5 px-md-5">
-
+              <p class="text-success"> <%= flash[:notice] %> </p>
               <form action="/to_login_handler" method="post" id="login-form">
                 <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
                 <div class="form-outline mb-4">
