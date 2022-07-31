@@ -55,6 +55,14 @@
     <div class="card">
         <h5 class="text-center mb-4">Edit Account</h5>
         <form class="form-card" action="/update_user" method="post" enctype='multipart/form-data'>
+            <div class="row d-flex align-items-center justify-content-center">
+                <% if user['img_url']['url'].nil? %>
+                <i class="fa-solid fa-circle-user" id="user-profile-top"></i>
+                <% else %>
+                <img src="<%= user['img_url']['url'] %>" alt="user-avatar-top" id="my-acc-profile">
+                <% end %>
+                <input type="file" name="user[img_url]" id="user-img-upload">
+            </div>
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
             <div class="row justify-content-between text-left">
                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">First name</label>
@@ -72,9 +80,7 @@
                     <input type="text" id="ans" name="user[bio]" value="<%= user_details['bio'] %>"> </div>
             </div>
 
-            <div class="row justify-content-between text-left">
-                <input type="file" name="user[img_url]" id="user-img-upload">
-            </div>
+
 
             <div class="justify-content-between">
                 <div class="form-group col-sm-6"> <button type="submit" class="btn-c">Save</button>

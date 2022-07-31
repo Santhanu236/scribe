@@ -12,23 +12,18 @@ class BlogController < ApplicationController
     def save_blog
         save_id = params[:save_id]
         cur_user_id = session[:user_id]["id"]
-        puts "========= #{cur_user_id} ================= #{save_id}"
-        puts SavedBlog.where(users_id: cur_user_id, blogs_id: save_id).length
-        puts "====================================================="
         is_exist = (SavedBlog.where(users_id: cur_user_id, blogs_id: save_id).length > 0 ? true : false  )
-
         if is_exist
-            return render plain: "Already Saved"
+            redirect_to '/home'
+        else
+            save_record = SavedBlog.create!(
+                users_id: cur_user_id,
+                blogs_id: save_id,
+            )
+            save_record.save
+
+            redirect_to '/home'
         end
-
-        save_record = SavedBlog.create!(
-            users_id: cur_user_id,
-            blogs_id: save_id,
-        )
-        save_record.save
-
-        redirect_to '/home'
-
     end
 
     def delete_saved
