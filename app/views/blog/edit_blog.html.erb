@@ -53,7 +53,7 @@
 <div class="col d-flex justify-content-center">
     <div class="card">
         <h2 class="text-center mb-4">Blog Editor</h2>
-        <form class="form-card" enctype="multipart/form-data"  action=""  method="post">
+        <form class="form-card" enctype="multipart/form-data"  action="/update_blog"  method="post">
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
             <div class="row justify-content-between text-left">
                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Title</label>
@@ -77,10 +77,11 @@
             </div> <br>
 
             <div class="row d-flex align-items-center justify-content-center">
-                <% if user['img_url']['url'].nil? %>
+                <% if edit_blog["img_url.nil?"] %>
                 <i class="fa-solid fa-circle-user" id="user-profile-top"></i>
                 <% else %>
-                <img src="<%= user['img_url']['url'] %>" alt="user-avatar-top" id="my-acc-profile"> <br>
+                <% blog_img_url = "/uploads/blog/img_url/" + edit_blog["id"].to_s + "/" + edit_blog["img_url"] %>
+                <img src="<%= blog_img_url %>" alt="user-avatar-top" id="my-acc-profile"> <br>
                 <% end %>
                 <input type="file" name="user[img_url]" id="user-img-file" accept=".png, .jpeg, .jpg" hidden>
                 <div class="d-flex align-items-center justify-content-center">

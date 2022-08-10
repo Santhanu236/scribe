@@ -53,25 +53,28 @@
 <div class="row" id="home-search-panel">
     <div class="col-2"><a class="btn" id="new-blog-btn" href="/new_post" role="button"><i class="fa-solid fa-plus"></i> &nbsp; New Post</a></div>
     <div class="col-6">
-        <form action="/search_blog" method="post">
+        <form>
             <div class="row  align-items-center">
                 <div class="col">
-                    <input class="form-control form-control-lg form-control-borderless" type="search" name="search[keyword]" placeholder="Search Blogs here">
+                    <input class="form-control form-control-lg form-control-borderless" type="search"
+                        placeholder="Search Blogs here">
                 </div>
                 <div class="col-auto">
-                    <button class="btn-c" type="submit"><i class="fa-solid fa-magnifying-glass"></i>&nbsp; Search</button>
+                    <a href="#" class="btn" id="home-search-btn"><i class="fa-solid fa-magnifying-glass"></i>&nbsp;
+                        Search</a>
                 </div>
             </div>
         </form>
     </div>
     <div class="col-4">
-        <form action="/search_category" method="post">
+        <form>
             <div class="row  align-items-center">
                 <div class="col">
-                    <input class="form-control form-control-lg form-control-borderless" type="search" name="search[keyword]" placeholder="Filter">
+                    <input class="form-control form-control-lg form-control-borderless" type="search"
+                        placeholder="Filter">
                 </div>
                 <div class="col-auto">
-                    <button class="btn-c"><i class="fa-solid fa-filter"></i>&nbsp\; Filter</button>
+                    <button id="home-search-btn" class="btn"><i class="fa-solid fa-filter"></i>&nbsp; Filter</button>
                 </div>
             </div>
         </form>

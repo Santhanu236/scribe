@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   post '/create_new_blog', to: 'blog#create_new_blog'
   post '/update_user', to: 'users#update_user'
   post '/create_comment', to: 'blog#create_comment'
-
+  post '/update_blog', to: 'blog#update_blog'
   get '/save_blog/:save_id', to: 'blog#save_blog', as: :save_id
   get '/delete_saved_blog/:del_save_id', to: 'blog#delete_saved', as: :del_save_id
   get '/like_blog/:like_id', to: 'blog#like_blog', as: :like_id
