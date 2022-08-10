@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ImageUploaderUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
@@ -14,7 +16,7 @@ class ImageUploaderUploader < CarrierWave::Uploader::Base
   end
 
   def extension_white_list
-    %w(jpg jpeg png)
+    %w[jpg jpeg png]
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

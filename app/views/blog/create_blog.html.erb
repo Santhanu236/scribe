@@ -1,3 +1,4 @@
+<% user=session[:user_id] %>
 <nav class="navbar fixed-top navbar-expand-md navbar-dark liquid" id="navbarc">
     <a href="/home" class="navbar-brand mb-0">
         <%= image_tag('logo-main-light.png',alt: "logo" , id: "logo-img" , class: "d-inline-block align-top" ) %>
@@ -20,17 +21,23 @@
         </ul>
     </div>
     <div class="form-check form-switch">
-        <label for="dark-mode">Dark mode</label>
-        <input type="checkbox" name="dark-mode" class="form-check-input" id="darkSwitch">
+        <i class="fa-solid fa-sun text-white" id="dm-icon"></i>
+        <input type="checkbox" name="dark-mode" class="form-check-input" id="darkSwitch" >
     </div>
 
     <div class="dropdown">
         <a class="btn-secondary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
+            <% if user['img_url']['url'].nil? %>
             <i class="fa-solid fa-circle-user" id="user-profile-top"></i>
+            <% else %>
+            <div class="user-avatar-div">
+            <img src="<%= user['img_url']['url'] %>" alt="user-avatar-top" class="user-avatar">
+            </div>
+            <% end %>
         </a>
         <div class="dropdown-menu position-absolute top-25 end-0" aria-labelledby="dropdownMenuLink">
-            <% user=session[:user_id] %>
+
                 <p class="dropdown-item">Signed in as</p>
                 <p class="lead dropdown-item" style="color: gray;">
                     <%= user["first_name"] + " " + user["last_name"] %>
@@ -44,36 +51,42 @@
 
 </nav>
 
+<div class="col d-flex justify-content-center">
+    <div class="card">
+        <h2 class="text-center mb-4">Create new Blog</h2>
+        <form class="form-card" enctype="multipart/form-data"  action="/create_new_blog"  method="post">
+            <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+            <input name="blog[users_id]" type="hidden" value="<%= user['id'] %>">
+            <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Title</label>
+                    <input type="text" name="blog[title]" required> </div>
+                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Category</label>
+                    <input class="input-text js-input" type="text" name="blog[category]" required> </div>
+            </div> <br>
 
-<section class="create-a-blog">
-    <h1 class="title">Create New Blog</h1>
-    <form class="contact-form row" enctype="multipart/form-data"  action="/create_new_blog"  method="post">
-      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-      <input name="blog[users_id]" type="hidden" value="<%= user['id'] %>">
-       <div class="form-field col-lg-6">
-          <input class="input-text js-input" type="text" name="blog[title]" required>
-          <label class="label" for="name">Title</label>
-       </div>
-       <div class="form-field col-lg-6 ">
-          <input class="input-text js-input" type="text" name="blog[category]" required>
-          <label class="label">Category</label>
-       </div>
-       <div class="form-field col-lg-12 ">
-          <input id="company" class="input-text js-input" type="text" name="blog[description]" required>
-          <label class="label" for="company">Description</label>
-       </div>
+            <div class="row justify-content-between text-left">
+                <div class="form-group col-12 flex-column d-flex"> <label class="form-control-label px-3">Description</label>
+                    <input id="company" class="input-text js-input" type="text" name="blog[description]" required> </div>
+            </div> <br>
+            <div class="row justify-content-between text-left">
+                <label class="form-control-label px-3">Write Blog here...</label>
+                <textarea name="blog[text]" id="blog-text" cols="90" rows="10" placeholder="Write blog here..."></textarea>
+            </div> <br>
+            <div class="row justify-content-between text-left">
+                <h3>Upload Images Here</h3> <br>
+                <input type="file" name="blog[img_url]" id="user-img-file">
+                <img id="my-acc-profile" style="display: none;">
+                <i class="fa-solid fa-pen text-black" id="prof-edit" hidden></i>
+                <i class="fa-solid fa-trash text-black" id="prof-del" hidden></i>
+            </div> <br>
+            <div class="justify-content-between">
+                    <div class="float-end">
+                        <a href="/home"><button type="button" class="btn-c">Cancel</button></a>
+                    <button type="submit" class="btn-c"><i class="fa-solid fa-plus"></i> Create</button>
+                    </div>
+            </div>
+        </form>
+    </div>
+</div>
 
-       <div class="form-field col-lg-12">
-        <textarea name="blog[text]" id="blog-text" cols="105 " rows="10" placeholder="Write blog here..."></textarea>
-       </div>
-       <div class="form-field col-lg-12">
-        <h3>Upload Images Here</h3>
-        <input type="file" name="blog[img_url]" id="img-inp">
-       </div>
-       <div class="form-field col-lg-12">
-          <button class="submit-btn" type="submit">Submit</button>
-          <a href="/home"><button class="submit-btn" type="button">Cancel</button></a>
-       </div>
-    </form>
- </section>
-
+<%= javascript_pack_tag 'my_account.js' %>

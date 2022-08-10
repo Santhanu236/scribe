@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveColumnsAndAndRefsToSavedBlogs < ActiveRecord::Migration[6.1]
   def change
     remove_column :saved_blogs, :user_id, :integer

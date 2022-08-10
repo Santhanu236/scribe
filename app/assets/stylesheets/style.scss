@@ -2,11 +2,15 @@
     height: 40px;
     width: auto;
 }
+a{
+    text-decoration: none !important;
+
+}
 .btn-c {
-    background-color: #7a86b6d7;
+    background-color: black;
     border: none;
     height: 40px;
-    width: fit-content;
+    width: max-content;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px;
@@ -17,7 +21,7 @@
 }
 // custom bootstrap code:
 #navbarc{
-    background-color: #7a86b6d7;
+    background-color: black;
     padding-left: 120px;
     padding-right: 120px;
     position: sticky;
@@ -92,13 +96,13 @@
 #new-blog-btn{
     font-size: 20px;
     height: auto;
-    background-color: rgba(122, 134, 182, 0.844);
+    background-color: black;
     color: white;
 }
 
 #home-search-btn{
     height: auto;
-    background-color: rgba(122, 134, 182, 0.844);
+    background-color: black;
     color: white;
 }
 
@@ -108,20 +112,19 @@
     padding: 15px;
 }
 .blog-sub-div{
-    padding: 15px;
+    padding: 20px;
     background-color: #eeeeee;
     color: black;
     height: fit-content;
     border-radius: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 .blog-sub-div-dark{
-    padding: 15px;
+    padding: 20px;
     background-color: #242424;
     color: white;
     height: fit-content;
     border-radius: 10px;
-    margin-bottom: 10px;
 }
 .blog-user-profile{
     color: rgb(89, 203, 248);
@@ -133,7 +136,8 @@
 .blog-user-name{
     font-size: 20px;
     margin-left: 10px;
-    margin-top: 10px;
+    margin-top: 5px;
+    color: black;
 }
 .blog-time-div{
     margin-left: 4.75%;
@@ -149,8 +153,7 @@
 }
 .blog-img{
     border-radius: 5px;
-    height: 500px;
-    width: auto;
+    width: 300px;
 }
 .blog-content-div{
     padding-left: 50px;
@@ -163,8 +166,43 @@
     margin-top: 7px;
     margin-left: -20px;
 }
+.blog-tr-btn-div{
+    margin-left: 800px !important;
+}
 #my-acc-profile{
     height: 200px;
     width: auto;
     border-radius: 20px;
+}
+// view user page
+#view-user-div{
+    width: 100%;
+    height: fit-content;
+}
+#vu-profile{
+    font-size: 120px;
+}
+#vu-name-div{
+    padding-left: 60px;
+    padding-top: 20px;
+}
+.vu-profile-img-div{
+    overflow: hidden;
+    border-radius: 100%;
+    justify-content: center;
+    height: 120px;
+    width: 120px;
+}
+.vu-profile-img{
+    height: 120px;
+}
+// comment-section
+.com-username{
+    font-size: 20px;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+.com-text{
+    margin-left: 50px;
+    font-size: 17px ;
 }

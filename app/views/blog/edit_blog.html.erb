@@ -1,0 +1,100 @@
+<% user=session[:user_id] %>
+<nav class="navbar fixed-top navbar-expand-md navbar-dark liquid" id="navbarc">
+    <a href="/home" class="navbar-brand mb-0">
+        <%= image_tag('logo-main-light.png',alt: "logo" , id: "logo-img" , class: "d-inline-block align-top" ) %>
+    </a>
+    <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" class="navbar-toggler"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse h-100 d-flex align-items-center justify-content-center" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a href="/home" class="nav-link" id="home-tab"> Home</a>
+            </li>
+            <li class="nav-item active">
+                <a href="/my_blogs" class="nav-link" id="my-blogs-tab">My blogs</a>
+            </li>
+            <li class="nav-item active">
+                <a href="/saved" class="nav-link" id="saved-tab">Saved</a>
+            </li>
+        </ul>
+    </div>
+    <div class="form-check form-switch">
+        <i class="fa-solid fa-sun text-white" id="dm-icon"></i>
+        <input type="checkbox" name="dark-mode" class="form-check-input" id="darkSwitch" >
+    </div>
+
+    <div class="dropdown">
+        <a class="btn-secondary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <% if user['img_url']['url'].nil? %>
+            <i class="fa-solid fa-circle-user" id="user-profile-top"></i>
+            <% else %>
+            <div class="user-avatar-div">
+            <img src="<%= user['img_url']['url'] %>" alt="user-avatar-top" class="user-avatar">
+            </div>
+            <% end %>
+        </a>
+        <div class="dropdown-menu position-absolute top-25 end-0" aria-labelledby="dropdownMenuLink">
+                <p class="dropdown-item">Signed in as</p>
+                <p class="lead dropdown-item" style="color: gray;">
+                    <%= user["first_name"] + " " + user["last_name"] %>
+                </p>
+                <a class="dropdown-item" href="/my_account"><i class="fa-solid fa-user"></i> &nbsp; My Account</a>
+                <a class="dropdown-item" href="#"><i class="fa-solid fa-bug"></i>&nbsp; Report</a>
+                <a class="dropdown-item" href="#"><i class="fa-solid fa-comment"></i> &nbsp; Feedback</a>
+                <a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket"></i>&nbsp; Log out</a>
+        </div>
+    </div>
+
+</nav>
+<% edit_blog = Blog.find($edit_blog_id) %>
+<div class="col d-flex justify-content-center">
+    <div class="card">
+        <h2 class="text-center mb-4">Blog Editor</h2>
+        <form class="form-card" enctype="multipart/form-data"  action=""  method="post">
+            <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+            <div class="row justify-content-between text-left">
+                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Title</label>
+                    <input type="text" value="<%= edit_blog['title'] %>" name="blog[title]" required> </div>
+                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Category</label>
+                    <input class="input-text js-input" type="text" value="<%= edit_blog['category'] %>" name="blog[category]" required> </div>
+            </div> <br>
+
+            <div class="row justify-content-between text-left">
+                <div class="form-group col-12 flex-column d-flex"> <label class="form-control-label px-3">Description</label>
+                    <input class="input-text js-input" value="<%= edit_blog['description'] %>" type="text" name="blog[description]" required> </div>
+            </div> <br>
+            <div class="row justify-content-between text-left">
+                <label class="form-control-label px-3">Write Blog here...</label>
+                <textarea name="blog[text]" id="blog-text" cols="90" rows="10"><%= edit_blog['text'] %></textarea>
+            </div> <br>
+            <div class="row justify-content-between text-left">
+                <h3>Upload Images Here</h3> <br>
+                <input type="file" name="blog[img_url]" id="user-img-file" hidden>
+                <img id="my-acc-profile" style="display: none;">
+            </div> <br>
+
+            <div class="row d-flex align-items-center justify-content-center">
+                <% if user['img_url']['url'].nil? %>
+                <i class="fa-solid fa-circle-user" id="user-profile-top"></i>
+                <% else %>
+                <img src="<%= user['img_url']['url'] %>" alt="user-avatar-top" id="my-acc-profile"> <br>
+                <% end %>
+                <input type="file" name="user[img_url]" id="user-img-file" accept=".png, .jpeg, .jpg" hidden>
+                <div class="d-flex align-items-center justify-content-center">
+                    <i class="fa-solid fa-pen text-black" id="prof-edit"></i> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="fa-solid fa-trash text-black" id="prof-del"></i>
+                </div>
+            <div class="justify-content-between">
+                    <div class="float-end">
+                        <a href="/my_blogs"><button type="button" class="btn-c"><i class="fa-solid fa-trash"></i> Discard</button></a>
+                    <button type="submit" class="btn-c"><i class="fa-solid fa-floppy-disk"></i>  Save</button>
+                    </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<%= javascript_pack_tag 'my_account.js' %>

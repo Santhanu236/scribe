@@ -1,0 +1,139 @@
+<% user=session[:user_id] %>
+<nav class="navbar fixed-top navbar-expand-md navbar-dark liquid" id="navbarc">
+    <a href="/home" class="navbar-brand mb-0">
+        <%= image_tag('logo-main-light.png',alt: "logo" , id: "logo-img" , class: "d-inline-block align-top" ) %>
+    </a>
+    <button type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" class="navbar-toggler"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse h-100 d-flex align-items-center justify-content-center" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a href="/home" class="nav-link" id="home-tab">Home</a>
+            </li>
+            <li class="nav-item active">
+                <a href="/my_blogs" class="nav-link" id="my-blogs-tab"> My blogs</a>
+            </li>
+            <li class="nav-item active">
+                <a href="/saved" class="nav-link" id="saved-tab"> Saved</a>
+            </li>
+        </ul>
+    </div>
+    <div class="form-check form-switch">
+        <i class="fa-solid fa-sun text-white" id="dm-icon"></i>
+        <input type="checkbox" name="dark-mode" class="form-check-input" id="darkSwitch" >
+    </div>
+
+    <div class="dropdown">
+        <a class="btn-secondary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <% if user['img_url']['url'].nil? %>
+            <i class="fa-solid fa-circle-user" id="user-profile-top"></i>
+            <% else %>
+            <div class="user-avatar-div">
+            <img src="<%= user['img_url']['url'] %>" alt="user-avatar-top" class="user-avatar">
+            </div>
+            <% end %>
+        </a>
+        <div class="dropdown-menu position-absolute top-25 end-0" aria-labelledby="dropdownMenuLink">
+
+                <p class="dropdown-item">Signed in as</p>
+                <p class="lead dropdown-item" style="color: gray;">
+                    <%= user["first_name"] + " " + user["last_name"] %>
+                </p>
+                <a class="dropdown-item" href="/my_account"><i class="fa-solid fa-user"></i> &nbsp; My Account</a>
+                <a class="dropdown-item" href="#"><i class="fa-solid fa-bug"></i>&nbsp; Report</a>
+                <a class="dropdown-item" href="#"><i class="fa-solid fa-comment"></i> &nbsp; Feedback</a>
+                <a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket"></i>&nbsp; Log out</a>
+        </div>
+    </div>
+</nav>
+<% view_user_details = User.find($view_user_id) %>
+<div class="container">
+    <div class="card" id="view-user-div">
+        <div class="row">
+            <div class="col-1">
+                <% if view_user_details['img_url'].nil? %>
+                <i class="fa-solid fa-circle-user" id="vu-profile"></i>
+                <% else %>
+                <% view_user_img_path = "/uploads/user/img_url/" + view_user_details["id"].to_s + "/" + view_user_details["img_url"] %>
+                <div class="vu-profile-img-div"><img src="<%= view_user_img_path %>" class="user-avatar vu-profile-img" alt="User"></div>
+                <% end %>
+            </div>
+            <div class="col-5" id="vu-name-div">
+                <p class="h2"><%= view_user_details['first_name']+" "+view_user_details['last_name'] %></p>
+                <p class="h5"><%= view_user_details['bio'] %></p>
+            </div>
+            <div class="col-2 pt-4"><p class="h4">0</p><p class="text-secondary">Followers</p></div>
+            <div class="col-2 pt-4"><p class="h4">0</p><p class="text-secondary">Following</p></div>
+            <div class="col-1 pt-4"><button class="btn-c">Follow</button></div>
+        </div>
+    </div>
+</div>
+<div class="container" id="home-blog-main-div">
+
+<% Blog.where(users_id: $view_user_id).map do |cur_blog| %>
+<% blog_own = User.find(cur_blog["users_id"]) %>
+
+    <div class="container blog-sub-div" >
+        <div class="d-inline-flex mr-3">
+            <% if blog_own["img_url"].nil? %>
+            <i class="fa-solid fa-circle-user" id="user-profile-top"></i>
+            <% else %>
+            <% blog_own_img = "/uploads/user/img_url/" + blog_own["id"].to_s + "/" + blog_own["img_url"] %>
+            <div class="user-avatar-div"><img src="<%= blog_own_img %>" class="blog-user-img user-avatar" alt="User"></div>
+            <% end %>
+
+            <p class="blog-user-name"> <%= blog_own["first_name"]+" "+ blog_own["last_name"] %> </p>
+            <a href="/view_blog/<%= cur_blog['id'] %>"><button class="btn-c float-right blog-open-btn"><i class="fa-solid fa-folder-open"></i> Open</button></a>
+        </div> <br>
+        <div class="d-inline-flex blog-time-div">
+            <% blog_date = cur_blog["updated_at"] %>
+            <i class="fa-solid fa-clock-rotate-left" style="color: gray;font-size: 13px;"></i><p class="blog-timestamp"><%= blog_date %></p>
+        </div>
+        <div class="d-flex justify-content-center">
+            <p class="blog-title"> <%= cur_blog["title"] %> </p>
+        </div>
+
+        <div class="row">
+            <div class="col-8 blog-content-div">
+                <p class="blog-content"><%= cur_blog["text"] %></p>
+            </div>
+            <div class="col-4 d-flex justify-content-center">
+                <% if cur_blog["img_url"] %>
+                <% img_path = "/uploads/blog/img_url/" + cur_blog["id"].to_s + "/" + cur_blog["img_url"] %>
+                <img src="<%= img_path %>" alt="blog-img" class="blog-img">
+                <%end%>
+            </div>
+        </div>
+        <br> <br>
+
+        <div class="blog-btns-div row">
+            <div class="col-1">
+            <% like_exist = Like.find_by(users_id: user['id'], blogs_id: cur_blog['id']).nil? %>
+            <% unless like_exist %>
+            <a href="/delete_liked_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><i class="fa-solid fa-heart text-danger"></i>&nbsp; Liked</button></a>
+            <% else %>
+            <a href="/like_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><i class="fa-regular fa-heart text-danger"></i>&nbsp; Like</button></a>
+            <% end %>
+            </div>
+            <% cur_blog_likes = Like.where(blogs_id: cur_blog['id']).length %>
+            <div class="col-1"><p class="blog-likes"><%= cur_blog_likes %> likes</p></div>
+            <div class="col-6"></div>
+            <div class="col-4">
+                <button class="btn-c" type="button"><i class="fa-solid fa-comment"></i>&nbsp;Comment</button>
+                <button class="btn-c" type="button"><i class="fa-solid fa-share-nodes"></i> &nbsp;Share</button>
+
+                <% is_exist = SavedBlog.find_by(users_id: user['id'], blogs_id: cur_blog['id']).nil? %>
+                <% unless is_exist %>
+                <a href="/delete_saved_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><i class="fa-solid fa-bookmark"></i>&nbsp; Saved</button></a>
+                <% else %>
+                <a href="/save_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><i class="fa-regular fa-bookmark"></i>&nbsp; Save</button></a>
+                <%end%>
+            </div>
+        </div>
+    </div>
+
+<% end %>
+</div>
