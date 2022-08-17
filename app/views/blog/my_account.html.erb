@@ -21,7 +21,7 @@
         </ul>
     </div>
     <div class="form-check form-switch">
-        <i class="fa-solid fa-sun text-white" id="dm-icon"></i>
+        <em class="fa-solid fa-sun text-white" id="dm-icon"></em>
         <input type="checkbox" name="dark-mode" class="form-check-input" id="darkSwitch">
     </div>
 
@@ -29,7 +29,7 @@
         <a class="btn-secondary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             <% if user['img_url']['url'].nil? %>
-            <i class="fa-solid fa-circle-user" id="user-profile-top"></i>
+            <em class="fa-solid fa-circle-user" id="user-profile-top"></em>
             <% else %>
             <div class="user-avatar-div">
             <img src="<%= user['img_url']['url'] %>" alt="user-avatar-top" class="user-avatar">
@@ -42,9 +42,9 @@
                 <p class="lead dropdown-item" style="color: gray;">
                     <%= user["first_name"] + " " + user["last_name"] %>
                 </p>
-                <a class="dropdown-item" href="/my_account"><i class="fa-solid fa-user"></i> &nbsp; My Account</a>
-                <a class="dropdown-item" href="/feedback"><i class="fa-solid fa-comment"></i> &nbsp; Feedback</a>
-                <a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket"></i>&nbsp; Log out</a>
+                <a class="dropdown-item" href="/my_account"><em class="fa-solid fa-user"></em> &nbsp; My Account</a>
+                <a class="dropdown-item" href="/feedback"><em class="fa-solid fa-comment"></em> &nbsp; Feedback</a>
+                <a class="dropdown-item" href="/logout"><em class="fa-solid fa-right-from-bracket"></em>&nbsp; Log out</a>
         </div>
     </div>
 </nav>
@@ -56,14 +56,14 @@
         <form class="form-card" action="/update_user" method="post" enctype='multipart/form-data'>
             <div class="row d-flex align-items-center justify-content-center">
                 <% if user['img_url']['url'].nil? %>
-                <i class="fa-solid fa-circle-user" id="user-profile-top"></i>
+                <em class="fa-solid fa-circle-user" id="user-profile-top"></em>
                 <% else %>
                 <img src="<%= user['img_url']['url'] %>" alt="user-avatar-top" id="my-acc-profile"> <br>
                 <% end %>
                 <input type="file" name="user[img_url]" id="user-img-file" accept=".png, .jpeg, .jpg" hidden>
                 <div class="d-flex align-items-center justify-content-center">
-                    <i class="fa-solid fa-pen text-black" id="prof-edit"></i> &nbsp;&nbsp;&nbsp;&nbsp;
-                    <i class="fa-solid fa-trash text-black" id="prof-del"></i>
+                    <em class="fa-solid fa-pen text-black" id="prof-edit"></em> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <em class="fa-solid fa-trash text-black" id="prof-del"></em>
                 </div>
             </div> <br>
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">

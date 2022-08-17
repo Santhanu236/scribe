@@ -60,4 +60,19 @@ class HomeController < ApplicationController
     render 'blog/edit_blog'
   end
 
+  def feedback
+    render 'blog/feedback'
+  end
+
+  def submit_feedback
+    cur_user = session[:user_id]['id']
+    feedback = params[:feedback]
+    fb = Feedback.create!(
+      users_id: cur_user,
+      feedback: feedback
+    )
+    if fb.save
+      redirect_to '/home'
+    end
+  end
 end

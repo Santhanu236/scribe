@@ -13,7 +13,7 @@
                 <a href="/home" class="nav-link" id="home-tab">Home</a>
             </li>
             <li class="nav-item active">
-                <a href="/my_blogs" class="nav-link active" id="my-blogs-tab"><i class="fa-solid fa-book-open-reader"></i> My blogs</a>
+                <a href="/my_blogs" class="nav-link active" id="my-blogs-tab"><em class="fa-solid fa-book-open-reader"></em> My blogs</a>
             </li>
             <li class="nav-item active">
                 <a href="/saved" class="nav-link" id="saved-tab">Saved</a>
@@ -21,7 +21,7 @@
         </ul>
     </div>
     <div class="form-check form-switch">
-        <i class="fa-solid fa-sun text-white" id="dm-icon"></i>
+        <em class="fa-solid fa-sun text-white" id="dm-icon"></em>
         <input type="checkbox" name="dark-mode" class="form-check-input" id="darkSwitch">
     </div>
 
@@ -29,7 +29,7 @@
         <a class="btn-secondary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             <% if user['img_url']['url'].nil? %>
-            <i class="fa-solid fa-circle-user" id="user-profile-top"></i>
+            <em class="fa-solid fa-circle-user" id="user-profile-top"></em>
             <% else %>
             <div class="user-avatar-div">
             <img src="<%= user['img_url']['url'] %>" alt="user-avatar-top" class="user-avatar">
@@ -42,9 +42,9 @@
                 <p class="lead dropdown-item" style="color: gray;">
                     <%= user["first_name"] + " " + user["last_name"] %>
                 </p>
-                <a class="dropdown-item" href="/my_account"><i class="fa-solid fa-user"></i> &nbsp; My Account</a>
-                <a class="dropdown-item" href="/feedback"><i class="fa-solid fa-comment"></i> &nbsp; Feedback</a>
-                <a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket"></i>&nbsp; Log out</a>
+                <a class="dropdown-item" href="/my_account"><em class="fa-solid fa-user"></em> &nbsp; My Account</a>
+                <a class="dropdown-item" href="/feedback"><em class="fa-solid fa-comment"></em> &nbsp; Feedback</a>
+                <a class="dropdown-item" href="/logout"><em class="fa-solid fa-right-from-bracket"></em>&nbsp; Log out</a>
         </div>
     </div>
 </nav>
@@ -56,7 +56,7 @@
 <div class="container blog-sub-div" >
     <div class="d-inline-flex w-100">
         <% if blog_own["img_url"].nil? %>
-        <a href="/view_user/<%= blog_own['id'] %>"><i class="fa-solid fa-circle-user" id="user-profile-top"></i></a>
+        <a href="/view_user/<%= blog_own['id'] %>"><em class="fa-solid fa-circle-user" id="user-profile-top"></em></a>
         <% else %>
         <% blog_own_img = "/uploads/user/img_url/" + blog_own["id"].to_s + "/" + blog_own["img_url"] %>
         <div class="user-avatar-div"><a href="/view_user/<%= blog_own['id'] %>"><img src="<%= blog_own_img %>" class="blog-user-img user-avatar" alt="User"></a></div>
@@ -64,14 +64,14 @@
 
         <a href="/view_user/<%= blog_own['id'] %>" class="blog-user-name"><%= blog_own["first_name"]+" "+ blog_own["last_name"] %></a>
         <div class="blog-tr-btn-div">
-        <a href="/edit_blog/<%= cur_blog['id'] %>"><button class="btn-c"><i class="fa-solid fa-pen"></i> Edit</button></a>
-        <button class="btn-c" onclick="delete_confirm(this)" data-blogid="<%= cur_blog['id'] %>"><i class="fa-solid fa-trash"></i> Delete</button>
-        <a href="/view_blog/<%= cur_blog['id'] %>"><button class="btn-c"><i class="fa-solid fa-folder-open"></i> Open</button></a>
+        <a href="/edit_blog/<%= cur_blog['id'] %>"><button class="btn-c"><em class="fa-solid fa-pen"></em> Edit</button></a>
+        <button class="btn-c" onclick="delete_confirm(this)" data-blogid="<%= cur_blog['id'] %>"><em class="fa-solid fa-trash"></em> Delete</button>
+        <a href="/view_blog/<%= cur_blog['id'] %>"><button class="btn-c"><em class="fa-solid fa-folder-open"></em> Open</button></a>
         </div>
     </div> <br>
     <div class="d-inline-flex blog-time-div">
         <% blog_date = cur_blog["updated_at"] %>
-        <i class="fa-solid fa-clock-rotate-left" style="color: gray;font-size: 13px;"></i><p class="blog-timestamp"><%= blog_date %></p>
+        <em class="fa-solid fa-clock-rotate-left" style="color: gray;font-size: 13px;"></em><p class="blog-timestamp"><%= blog_date %></p>
     </div>
     <div class="d-flex justify-content-center">
         <b><p class="blog-title"> <%= cur_blog["title"] %> </p></b>
@@ -94,23 +94,23 @@
         <div class="col-1">
         <% like_exist = Like.find_by(users_id: user['id'], blogs_id: cur_blog['id']).nil? %>
         <% unless like_exist %>
-        <a href="/delete_liked_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><i class="fa-solid fa-heart text-danger"></i>&nbsp; Liked</button></a>
+        <a href="/delete_liked_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-solid fa-heart text-danger"></em>&nbsp; Liked</button></a>
         <% else %>
-        <a href="/like_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><i class="fa-regular fa-heart text-danger"></i>&nbsp; Like</button></a>
+        <a href="/like_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-regular fa-heart text-danger"></em>&nbsp; Like</button></a>
         <% end %>
         </div>
         <% cur_blog_likes = Like.where(blogs_id: cur_blog['id']).length %>
         <div class="col-1"><p class="blog-likes"><%= cur_blog_likes %> likes</p></div>
         <div class="col-6"></div>
         <div class="col-4">
-            <a href="/view_blog/<%= cur_blog['id'] %>/#comment-div"><button class="btn-c" type="button"><i class="fa-solid fa-comment"></i>&nbsp;Comment</button></a>
-            <button class="btn-c" type="button"><i class="fa-solid fa-share-nodes"></i> &nbsp;Share</button>
+            <a href="/view_blog/<%= cur_blog['id'] %>/#comment-div"><button class="btn-c" type="button"><em class="fa-solid fa-comment"></em>&nbsp;Comment</button></a>
+            <button class="btn-c" type="button"><em class="fa-solid fa-share-nodes"></em> &nbsp;Share</button>
 
             <% is_exist = SavedBlog.find_by(users_id: user['id'], blogs_id: cur_blog['id']).nil? %>
             <% unless is_exist %>
-            <a href="/delete_saved_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><i class="fa-solid fa-bookmark"></i>&nbsp; Saved</button></a>
+            <a href="/delete_saved_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-solid fa-bookmark"></em>&nbsp; Saved</button></a>
             <% else %>
-            <a href="/save_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><i class="fa-regular fa-bookmark"></i>&nbsp; Save</button></a>
+            <a href="/save_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-regular fa-bookmark"></em>&nbsp; Save</button></a>
             <%end%>
         </div>
     </div>
@@ -119,9 +119,9 @@
 </div>
 
 <div id="delete-confirm">
-    <p class="h4"><i class="fa-solid fa-triangle-exclamation text-warning"></i>  Are you sure, You want to delete this Blog?</p>
+    <p class="h4"><em class="fa-solid fa-triangle-exclamation text-warning"></em>  Are you sure, You want to delete this Blog?</p>
     <div class="float-end">
-        <a href="" id="del-a"><button class="btn-c"><i class="fa-solid fa-trash"></i> Delete</button></a>
+        <a href="" id="del-a"><button class="btn-c"><em class="fa-solid fa-trash"></em> Delete</button></a>
         <button onclick="hide_del_confirm()" class="btn-c">Cancel</button>
     </div>
 </div>

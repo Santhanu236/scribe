@@ -21,7 +21,7 @@
         </ul>
     </div>
     <div class="form-check form-switch">
-        <i class="fa-solid fa-sun text-white" id="dm-icon"></i>
+        <em class="fa-solid fa-sun text-white" id="dm-icon"></em>
         <input type="checkbox" name="dark-mode" class="form-check-input" id="darkSwitch" >
     </div>
 
@@ -29,7 +29,7 @@
         <a class="btn-secondary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             <% if user['img_url']['url'].nil? %>
-            <i class="fa-solid fa-circle-user" id="user-profile-top"></i>
+            <em class="fa-solid fa-circle-user" id="user-profile-top"></em>
             <% else %>
             <div class="user-avatar-div">
             <img src="<%= user['img_url']['url'] %>" alt="user-avatar-top" class="user-avatar">
@@ -42,9 +42,9 @@
                 <p class="lead dropdown-item" style="color: gray;">
                     <%= user["first_name"] + " " + user["last_name"] %>
                 </p>
-                <a class="dropdown-item" href="/my_account"><i class="fa-solid fa-user"></i> &nbsp; My Account</a>
-                <a class="dropdown-item" href="/feedback"><i class="fa-solid fa-comment"></i> &nbsp; Feedback</a>
-                <a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket"></i>&nbsp; Log out</a>
+                <a class="dropdown-item" href="/my_account"><em class="fa-solid fa-user"></em> &nbsp; My Account</a>
+                <a class="dropdown-item" href="/feedback"><em class="fa-solid fa-comment"></em> &nbsp; Feedback</a>
+                <a class="dropdown-item" href="/logout"><em class="fa-solid fa-right-from-bracket"></em>&nbsp; Log out</a>
         </div>
     </div>
 
@@ -75,13 +75,13 @@
                 <h3>Upload Images Here</h3> <br>
                 <input type="file" name="blog[img_url]" id="user-img-file">
                 <img id="my-acc-profile" style="display: none;">
-                <i class="fa-solid fa-pen text-black" id="prof-edit" hidden></i>
-                <i class="fa-solid fa-trash text-black" id="prof-del" hidden></i>
+                <em class="fa-solid fa-pen text-black" id="prof-edit" hidden></em>
+                <em class="fa-solid fa-trash text-black" id="prof-del" hidden></em>
             </div> <br>
             <div class="justify-content-between">
                     <div class="float-end">
                         <a href="/home"><button type="button" class="btn-c">Cancel</button></a>
-                    <button type="submit" class="btn-c"><i class="fa-solid fa-plus"></i> Create</button>
+                    <button type="submit" class="btn-c"><em class="fa-solid fa-plus"></em> Create</button>
                     </div>
             </div>
         </form>

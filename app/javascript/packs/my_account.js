@@ -1,4 +1,4 @@
-let imgInp = document.getElementById('user-img-file');
+    let imgInp = document.getElementById('user-img-file');
 let edit_icon = document.getElementById('prof-edit');
 let del_icon = document.getElementById('prof-del');
 let upload_img = document.getElementById('my-acc-profile');
