@@ -43,15 +43,14 @@
                     <%= user["first_name"] + " " + user["last_name"] %>
                 </p>
                 <a class="dropdown-item" href="/my_account"><i class="fa-solid fa-user"></i> &nbsp; My Account</a>
-                <a class="dropdown-item" href="#"><i class="fa-solid fa-bug"></i>&nbsp; Report</a>
-                <a class="dropdown-item" href="#"><i class="fa-solid fa-comment"></i> &nbsp; Feedback</a>
+                <a class="dropdown-item" href="/feedback"><i class="fa-solid fa-comment"></i> &nbsp; Feedback</a>
                 <a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket"></i>&nbsp; Log out</a>
         </div>
     </div>
 </nav>
 
 <div class="container" id="home-blog-main-div">
-<% SavedBlog.where(users_id: user["id"]).map do |saved| %>
+    <% SavedBlog.where(users_id: user["id"]).map do |saved| %>
 <% cur_saved = saved["blogs_id"] %>
 <% cur_blog = Blog.find(cur_saved) %>
 
@@ -102,7 +101,7 @@
         <div class="col-1"><p class="blog-likes"><%= cur_blog_likes %> likes</p></div>
         <div class="col-6"></div>
         <div class="col-4">
-            <button class="btn-c" type="button"><i class="fa-solid fa-comment"></i>&nbsp;Comment</button>
+            <a href="/view_blog/<%= cur_blog['id'] %>/#comment-div"><button class="btn-c" type="button"><i class="fa-solid fa-comment"></i>&nbsp;Comment</button></a>
             <button class="btn-c" type="button"><i class="fa-solid fa-share-nodes"></i> &nbsp;Share</button>
 
             <% is_exist = SavedBlog.find_by(users_id: user['id'], blogs_id: cur_blog['id']).nil? %>

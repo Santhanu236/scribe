@@ -43,8 +43,7 @@
                     <%= user["first_name"] + " " + user["last_name"] %>
                 </p>
                 <a class="dropdown-item" href="/my_account"><i class="fa-solid fa-user"></i> &nbsp; My Account</a>
-                <a class="dropdown-item" href="#"><i class="fa-solid fa-bug"></i>&nbsp; Report</a>
-                <a class="dropdown-item" href="#"><i class="fa-solid fa-comment"></i> &nbsp; Feedback</a>
+                <a class="dropdown-item" href="/feedback"><i class="fa-solid fa-comment"></i> &nbsp; Feedback</a>
                 <a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket"></i>&nbsp; Log out</a>
         </div>
     </div>
@@ -66,7 +65,7 @@
         <a href="/view_user/<%= blog_own['id'] %>" class="blog-user-name"><%= blog_own["first_name"]+" "+ blog_own["last_name"] %></a>
         <div class="blog-tr-btn-div">
         <a href="/edit_blog/<%= cur_blog['id'] %>"><button class="btn-c"><i class="fa-solid fa-pen"></i> Edit</button></a>
-        <a href=""><button class="btn-c"><i class="fa-solid fa-trash"></i> Delete</button></a>
+        <button class="btn-c" onclick="delete_confirm(this)" data-blogid="<%= cur_blog['id'] %>"><i class="fa-solid fa-trash"></i> Delete</button>
         <a href="/view_blog/<%= cur_blog['id'] %>"><button class="btn-c"><i class="fa-solid fa-folder-open"></i> Open</button></a>
         </div>
     </div> <br>
@@ -104,7 +103,7 @@
         <div class="col-1"><p class="blog-likes"><%= cur_blog_likes %> likes</p></div>
         <div class="col-6"></div>
         <div class="col-4">
-            <button class="btn-c" type="button"><i class="fa-solid fa-comment"></i>&nbsp;Comment</button>
+            <a href="/view_blog/<%= cur_blog['id'] %>/#comment-div"><button class="btn-c" type="button"><i class="fa-solid fa-comment"></i>&nbsp;Comment</button></a>
             <button class="btn-c" type="button"><i class="fa-solid fa-share-nodes"></i> &nbsp;Share</button>
 
             <% is_exist = SavedBlog.find_by(users_id: user['id'], blogs_id: cur_blog['id']).nil? %>
@@ -119,12 +118,28 @@
 <% end %>
 </div>
 
+<div id="delete-confirm">
+    <p class="h4"><i class="fa-solid fa-triangle-exclamation text-warning"></i>  Are you sure, You want to delete this Blog?</p>
+    <div class="float-end">
+        <a href="" id="del-a"><button class="btn-c"><i class="fa-solid fa-trash"></i> Delete</button></a>
+        <button onclick="hide_del_confirm()" class="btn-c">Cancel</button>
+    </div>
+</div>
 
 <%= javascript_pack_tag 'home.js' %>
 
 <script>
+    let main_div = document.getElementById('home-blog-main-div');
+    let del_div = document.getElementById('delete-confirm');
 
-     $(document).ready(function(){
-        $('.dropdown-toggle').dropdown()
-    });
+    let delete_confirm = button => {
+        let del_blog_id = button.getAttribute('data-blogid');
+        document.getElementById('del-a').href = "/delete_blog/"+del_blog_id
+        main_div.style.filter = "blur(5px)"
+        del_div.style.display = "block";
+  }
+  function hide_del_confirm() {
+        main_div.style.filter = "blur(0px)";
+        del_div.style.display = "none";
+  }
 </script>

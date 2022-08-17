@@ -1,0 +1,48 @@
+<section class="background-radial-gradient overflow-hidden">
+    <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+      <div class="row gx-lg-5 align-items-center mb-5">
+        <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+          <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+            "Don't Panic" <br/>
+            <span style="color: hsl(218, 81%, 75%)">It's easy to reset your password</span>
+          </h1>
+        </div>
+
+        <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+          <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+          <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+          <div class="rounded bg-glass">
+            <div class="card-body px-4 py-5 px-md-5">
+              <form action="/match_otp" method="post" id="login-form">
+                <p class="text-primary">Hey! Check your Inbox <br>
+                    We've sent a 6 digit code to your Registered Email...
+                </p>
+                <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                <div class="form-outline mb-4">
+                  <input type="text" id="form3Example3" name="otp" class="form-control" placeholder="Enter Code" required/>
+                </div>
+                <p class="text-danger"><%= flash[:error] %></p>
+                <div class="d-inline-flex"><p class="text-danger">This Session will expire in</p>&nbsp;<p class="text-danger" id="otp-timer"></p></div>
+                <br>
+                <!-- Submit button -->
+                <button type="submit" id="login_submit" class="btn btn-primary btn-block mb-4">Verify</button>
+                <a href="/"><button type="button" class="btn btn-secondary btn-block mb-4">Cancel</button></a>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<script>
+    let time_p = document.getElementById('otp-timer');
+      let count = 60
+      let timers = setInterval(() => {
+        time_p.innerText = count--;
+        if(count == 0){
+          window.location.href = '/';
+        }
+    }, 1000);
+</script>
