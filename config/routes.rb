@@ -36,4 +36,7 @@ Rails.application.routes.draw do
 
   get '/follow_user/:fol_usr_id', to: 'relationship#create_relationship', as: :fol_usr_id
   get '/unfollow/:unfol_id', to: 'relationship#del_relationship', as: :unfol_id
+
+  get '/feedback', to: 'home#feedback'
+  post '/submit_feedback', to: 'home#submit_feedback'
 end

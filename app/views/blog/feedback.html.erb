@@ -1,0 +1,41 @@
+<section class="background-radial-gradient overflow-hidden">
+
+    <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
+      <div class="row gx-lg-5 align-items-center mb-5">
+        <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+          <h1 class="my-5 display-6 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
+            We love to hear from you <br> <br>
+            <span style="color: hsl(218, 81%, 75%)">“Mistakes should be examined, learned from, and discarded; not dwelled upon and stored.”</span>
+          </h1>
+        </div>
+
+        <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+          <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+          <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+          <div class="rounded bg-glass">
+            <div class="card-body px-4 py-5 px-md-5">
+              <form action="/submit_feedback" method="post" id="login-form">
+                <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="feedback">Feedback</label>
+                  <textarea name="feedback" cols="55" rows="10" placeholder="Your Feedback here"></textarea>
+                </div>
+                <br>
+                                <!-- Submit button -->
+                <button type="submit" id="login_submit" class="btn btn-primary btn-block mb-4">
+                  Submit :)
+                </button>
+                <button type="button" class="btn btn-secondary btn-block mb-4">
+                    Cancel
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<%= javascript_pack_tag 'login.js' %>
+

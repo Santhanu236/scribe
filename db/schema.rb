@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_14_231326) do
+ActiveRecord::Schema.define(version: 2022_08_17_195009) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -62,6 +62,14 @@ ActiveRecord::Schema.define(version: 2022_08_14_231326) do
     t.index ["users_id"], name: "index_comments_on_users_id"
   end
 
+  create_table "feedbacks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "feedback"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "users_id"
+    t.index ["users_id"], name: "index_feedbacks_on_users_id"
+  end
+
   create_table "likes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -103,6 +111,7 @@ ActiveRecord::Schema.define(version: 2022_08_14_231326) do
   add_foreign_key "blogs", "users", column: "users_id"
   add_foreign_key "comments", "blogs", column: "blogs_id"
   add_foreign_key "comments", "users", column: "users_id"
+  add_foreign_key "feedbacks", "users", column: "users_id"
   add_foreign_key "likes", "blogs", column: "blogs_id"
   add_foreign_key "likes", "users", column: "users_id"
   add_foreign_key "saved_blogs", "blogs", column: "blogs_id"
