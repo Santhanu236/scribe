@@ -37,4 +37,4 @@ function getFromLs(key) {
 }
 document.getElementById('darkSwitch').addEventListener('change', toggle_dark);
 
-
+// delete confirmation

@@ -1,16 +1,24 @@
 # frozen_string_literal: true
 
 class HomeController < ApplicationController
-  def home
+  def is_user_logged
     if session[:user_id].nil?
-      redirect_to '/'
+      false
     else
+      true
+    end
+  end
+
+  def home
+    if is_user_logged
       render 'blog/home'
+    else
+      redirect_to '/'
     end
   end
 
   def login
-    if !session[:user_id].nil?
+    if is_user_logged
       redirect_to '/home'
     else
       render 'blog/login'
@@ -51,4 +59,5 @@ class HomeController < ApplicationController
     $edit_blog_id = params[:eblog_id]
     render 'blog/edit_blog'
   end
+
 end

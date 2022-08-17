@@ -43,8 +43,7 @@
                     <%= user["first_name"] + " " + user["last_name"] %>
                 </p>
                 <a class="dropdown-item" href="/my_account"><i class="fa-solid fa-user"></i> &nbsp; My Account</a>
-                <a class="dropdown-item" href="#"><i class="fa-solid fa-bug"></i>&nbsp; Report</a>
-                <a class="dropdown-item" href="#"><i class="fa-solid fa-comment"></i> &nbsp; Feedback</a>
+                <a class="dropdown-item" href="/feedback"><i class="fa-solid fa-comment"></i> &nbsp; Feedback</a>
                 <a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket"></i>&nbsp; Log out</a>
         </div>
     </div>
@@ -53,10 +52,12 @@
 <div class="row" id="home-search-panel">
     <div class="col-2"><a class="btn" id="new-blog-btn" href="/new_post" role="button"><i class="fa-solid fa-plus"></i> &nbsp; New Post</a></div>
     <div class="col-6">
-        <form action="/search_blog" method="post">
-            <div class="row  align-items-center">
+        <form action="/search_blogs" method="post">
+            <div class="row align-items-center">
                 <div class="col">
-                    <input class="form-control form-control-lg form-control-borderless" type="search" name="search[keyword]" placeholder="Search Blogs here">
+                    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                    <input type="hidden" name="search_by" value="title">
+                    <input class="form-control form-control-lg form-control-borderless" type="search" name="keyword" placeholder="Search Blogs here" required>
                 </div>
                 <div class="col-auto">
                     <button class="btn-c" type="submit"><i class="fa-solid fa-magnifying-glass"></i>&nbsp; Search</button>
@@ -68,10 +69,12 @@
         <form action="/search_category" method="post">
             <div class="row  align-items-center">
                 <div class="col">
-                    <input class="form-control form-control-lg form-control-borderless" type="search" name="search[keyword]" placeholder="Filter">
+                    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                    <input type="hidden" name="search_by" value="category">
+                    <input class="form-control form-control-lg form-control-borderless" type="search" name="keyword" placeholder="Filter (Category)" required>
                 </div>
                 <div class="col-auto">
-                    <button class="btn-c"><i class="fa-solid fa-filter"></i>&nbsp\; Filter</button>
+                    <button class="btn-c"><i class="fa-solid fa-filter"></i>&nbsp; Filter</button>
                 </div>
             </div>
         </form>
@@ -128,7 +131,7 @@
             <div class="col-1"><p class="blog-likes"><%= cur_blog_likes %> likes</p></div>
             <div class="col-6"></div>
             <div class="col-4">
-                <button class="btn-c" type="button"><i class="fa-solid fa-comment"></i>&nbsp;Comment</button>
+                <a href="/view_blog/<%= cur_blog['id'] %>/#comment-div"><button class="btn-c" type="button"><i class="fa-solid fa-comment"></i>&nbsp;Comment</button></a>
                 <button class="btn-c" type="button"><i class="fa-solid fa-share-nodes"></i> &nbsp;Share</button>
 
                 <% is_exist = SavedBlog.find_by(users_id: user['id'], blogs_id: cur_blog['id']).nil? %>

@@ -6,3 +6,4 @@ class AddRefToComments < ActiveRecord::Migration[6.1]
     add_reference :comments, :blogs, foreign_key: true
   end
 end
+

@@ -1,12 +1,23 @@
 # frozen_string_literal: true
-
 class BlogController < ApplicationController
   def create_new_blog
     blog = Blog.new(user_params)
     if blog.save
+      p params[:blog][:img_url]
       redirect_to '/home'
     else
       render plain: 'fail'
+    end
+  end
+
+  def delete_blog
+    del_blog_id = params[:del_blog_id]
+    Like.where(blogs_id: del_blog_id).delete_all
+    Comment.where(blogs_id: del_blog_id).delete_all
+    SavedBlog.where(blogs_id: del_blog_id).delete_all
+    del_record = Blog.find(del_blog_id)
+    if del_record.delete
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -65,8 +76,19 @@ class BlogController < ApplicationController
     end
   end
 
-  private
+  def search_blogs
+    $search_by = "title"
+    $search_keyword = params[:keyword]
+    render 'blog/search_result'
+  end
 
+  def search_category
+    $search_by = "category"
+    $search_keyword = params[:keyword]
+     render 'blog/search_result'
+  end
+
+  private
   def get_user_id
     session[:user_id]['id']
   end
