@@ -76,7 +76,7 @@
             </div> <br>
 
             <div class="row d-flex align-items-center justify-content-center">
-                <% if edit_blog["img_url.nil?"] %>
+                <% if edit_blog["img_url"].nil? %>
                 <em class="fa-solid fa-circle-user" id="user-profile-top"></em>
                 <% else %>
                 <% blog_img_url = "/uploads/blog/img_url/" + edit_blog["id"].to_s + "/" + edit_blog["img_url"] %>
