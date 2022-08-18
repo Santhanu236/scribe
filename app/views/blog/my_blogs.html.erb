@@ -49,7 +49,6 @@
     </div>
 </nav>
 
-
 <div class="container" id="home-blog-main-div">
 <% Blog.where(users_id: user["id"]).map do |cur_blog| %>
 <% blog_own = User.find(cur_blog["users_id"]) %>

@@ -133,7 +133,7 @@
             <div class="col-6"></div>
             <div class="col-4">
                 <a href="/view_blog/<%= cur_blog['id'] %>/#comment-div"><button class="btn-c" type="button"><em class="fa-solid fa-comment"></em>&nbsp;Comment</button></a>
-                <button class="btn-c" type="button"><em class="fa-solid fa-share-nodes"></i> &nbsp;Share</button>
+                <button class="btn-c" type="button"><em class="fa-solid fa-share-nodes"></em> &nbsp;Share</button>
 
                 <% is_exist = SavedBlog.find_by(users_id: user['id'], blogs_id: cur_blog['id']).nil? %>
                 <% unless is_exist %>
