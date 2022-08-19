@@ -107,7 +107,8 @@
 
         <div class="row">
             <div class="col-8 blog-content-div">
-                <p class="blog-content"><%= cur_blog["text"] %></p>
+                <p class="blog-content text-cutting" id="blog-text"><%= cur_blog["text"] %></p> <a id="read-more">Read more</a>
+
             </div>
             <div class="col-4 d-flex justify-content-center">
                 <% if cur_blog["img_url"] %>
@@ -148,3 +149,4 @@
 </div>
 
 <%= javascript_pack_tag 'home.js' %>
+<%= javascript_pack_tag 'text_clamp.js' %>

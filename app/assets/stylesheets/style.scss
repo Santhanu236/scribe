@@ -7,8 +7,17 @@
 }
 a{
     text-decoration: none !important;
-
 }
+#read-more{
+    cursor: pointer;
+    columns: blue;
+}
+.text-cutting{
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+ }
 .btn-c {
     background-color: black;
     border: none;
