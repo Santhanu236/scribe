@@ -82,7 +82,7 @@
 </div>
 
 <div class="container" id="home-blog-main-div">
-<% Blog.all.map do |cur_blog| %>
+<% @all_posts.map do |cur_blog| %>
 <% blog_own = User.find(cur_blog["users_id"]) %>
 
     <div class="container blog-sub-div" >
@@ -147,6 +147,8 @@
 
 <% end %>
 </div>
+<div class="page-box"><%== pagy_nav(@pagy).html_safe %></div>
+
 
 <%= javascript_pack_tag 'home.js' %>
 <%= javascript_pack_tag 'text_clamp.js' %>

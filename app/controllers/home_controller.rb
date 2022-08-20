@@ -11,6 +11,7 @@ class HomeController < ApplicationController
 
   def home
     if is_user_logged
+      @pagy, @all_posts = pagy(Blog.all)
       render 'blog/home'
     else
       redirect_to '/'
