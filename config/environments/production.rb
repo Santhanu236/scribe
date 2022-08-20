@@ -64,20 +64,8 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "type_it_production"
 
-  config.action_mailer.raise_delivery_errors = true
 
-  config.action_mailer.perform_caching = true
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.default_url_options = { host: 'localhost:3000', protocol: 'http' }
-  config.action_mailer.perform_deliveries = true
-  config.action_mailer.smtp_settings = {
-    address: 'smtp.gmail.com',
-    port: 587,
-    user_name: 'scribeofficial236@gmail.com',
-    password: 'spavyjmbqcyjcepk',
-    authentication: 'plain',
-    enable_starttls_auto: true
-  }
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
@@ -89,6 +77,7 @@ Rails.application.configure do
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
+  config.action_mailer.default_url_options = { host: 'https://scribe-app-official.herokuapp.com/'}
   # Log disallowed deprecations.
   config.active_support.disallowed_deprecation = :log
 

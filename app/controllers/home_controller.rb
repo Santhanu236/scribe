@@ -31,7 +31,12 @@ class HomeController < ApplicationController
   end
 
   def my_blogs
-    render 'blog/my_blogs'
+    if is_user_logged
+      @pagy, @my_posts = pagy(Blog.where(user_id: session[:user_id]))
+      render 'blog/my_blogs'
+    else
+      redirect_to '/'
+    end
   end
 
   def saved
