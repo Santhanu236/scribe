@@ -48,7 +48,6 @@
     </div>
 
 </nav>
-<% edit_blog = Blog.find($edit_blog_id) %>
 <div class="col d-flex justify-content-center">
     <div class="card">
         <h2 class="text-center mb-4">Blog Editor</h2>
@@ -56,18 +55,18 @@
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
             <div class="row justify-content-between text-left">
                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Title</label>
-                    <input type="text" value="<%= edit_blog['title'] %>" name="blog[title]" required> </div>
+                    <input type="text" value="<%= @edit_blog['title'] %>" name="blog[title]" required> </div>
                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Category</label>
-                    <input class="input-text js-input" type="text" value="<%= edit_blog['category'] %>" name="blog[category]" required> </div>
+                    <input class="input-text js-input" type="text" value="<%= @edit_blog['category'] %>" name="blog[category]" required> </div>
             </div> <br>
 
             <div class="row justify-content-between text-left">
                 <div class="form-group col-12 flex-column d-flex"> <label class="form-control-label px-3">Description</label>
-                    <input class="input-text js-input" value="<%= edit_blog['description'] %>" type="text" name="blog[description]" required> </div>
+                    <input class="input-text js-input" value="<%= @edit_blog['description'] %>" type="text" name="blog[description]" required> </div>
             </div> <br>
             <div class="row justify-content-between text-left">
                 <label class="form-control-label px-3">Write Blog here...</label>
-                <textarea name="blog[text]" id="blog-text" cols="90" rows="10"><%= edit_blog['text'] %></textarea>
+                <textarea name="blog[text]" id="blog-text" cols="90" rows="10"><%= @edit_blog['text'] %></textarea>
             </div> <br>
             <div class="row justify-content-between text-left">
                 <h3>Upload Images Here</h3> <br>
@@ -76,10 +75,10 @@
             </div> <br>
 
             <div class="row d-flex align-items-center justify-content-center">
-                <% if edit_blog["img_url"].nil? %>
+                <% if @edit_blog["img_url"].nil? %>
                 <em class="fa-solid fa-circle-user" id="user-profile-top"></em>
                 <% else %>
-                <% blog_img_url = "/uploads/blog/img_url/" + edit_blog["id"].to_s + "/" + edit_blog["img_url"] %>
+                <% blog_img_url = "/uploads/blog/img_url/" + @edit_blog["id"].to_s + "/" + @edit_blog["img_url"] %>
                 <img src="<%= blog_img_url %>" alt="user-avatar-top" id="my-acc-profile"> <br>
                 <% end %>
                 <input type="file" name="user[img_url]" id="user-img-file" accept=".png, .jpeg, .jpg" hidden>

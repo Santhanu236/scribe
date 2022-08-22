@@ -50,8 +50,8 @@
 </nav>
 <br>
 
-<% view_blog = Blog.find($view_blog_id) %>
-<% blog_own = User.find(view_blog['users_id']) %>
+
+<% blog_own = User.find(@view_blog['users_id']) %>
 <div class="container blog-sub-div" >
     <div class="d-inline-flex w-100">
         <% if blog_own["img_url"].nil? %>
@@ -64,20 +64,20 @@
         <a href="/view_user/<%= blog_own['id'] %>" class="blog-user-name"><%= blog_own["first_name"]+" "+ blog_own["last_name"] %></a>
     </div> <br>
     <div class="d-inline-flex blog-time-div">
-        <% blog_date = view_blog["updated_at"] %>
+        <% blog_date = @view_blog["updated_at"] %>
         <em class="fa-solid fa-clock-rotate-left" style="color: gray;font-size: 13px;"></em><p class="blog-timestamp"><%= blog_date %></p>
     </div>
     <div class="d-flex justify-content-center">
-        <p class="blog-title"> <%= view_blog["title"] %> </p>
+        <p class="blog-title"> <%= @view_blog["title"] %> </p>
     </div>
 
     <div class="row">
         <div class="col-8 blog-content-div">
-            <p class="blog-content"><%= view_blog["text"] %></p>
+            <p class="blog-content"><%= @view_blog["text"] %></p>
         </div>
         <div class="col-4 d-flex justify-content-center">
-            <% if view_blog["img_url"] %>
-            <% img_path = "/uploads/blog/img_url/" + view_blog["id"].to_s + "/" + view_blog["img_url"] %>
+            <% if @view_blog["img_url"] %>
+            <% img_path = "/uploads/blog/img_url/" + @view_blog["id"].to_s + "/" + @view_blog["img_url"] %>
             <img src="<%= img_path %>" alt="blog-img" class="blog-img">
             <%end%>
         </div>
@@ -86,24 +86,24 @@
 
     <div class="blog-btns-div row">
         <div class="col-1">
-        <% like_exist = Like.find_by(users_id: user['id'], blogs_id: view_blog['id']).nil? %>
+        <% like_exist = Like.find_by(users_id: user['id'], blogs_id: @view_blog['id']).nil? %>
         <% unless like_exist %>
-        <a href="/delete_liked_blog/<%= view_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-solid fa-heart text-danger"></em>&nbsp; Liked</button></a>
+        <a href="/delete_liked_blog/<%= @view_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-solid fa-heart text-danger"></em></button></a>
         <% else %>
-        <a href="/like_blog/<%= view_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-regular fa-heart text-danger"></em>&nbsp; Like</button></a>
+        <a href="/like_blog/<%= @view_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-regular fa-heart text-danger"></em></button></a>
         <% end %>
         </div>
-        <% view_blog_likes = Like.where(blogs_id: view_blog['id']).length %>
-        <div class="col-1"><p class="blog-likes"><%= view_blog_likes %> likes</p></div>
+        <% @view_blog_likes = Like.where(blogs_id: @view_blog['id']).length %>
+        <div class="col-1"><p class="blog-likes"><%= @view_blog_likes %> likes</p></div>
         <div class="col-7"></div>
         <div class="col-3">
-            <button class="btn-c" type="button"><em class="fa-solid fa-share-nodes"></em> &nbsp;Share</button>
+            <button class="btn-c" type="button" id="share-btn"><em class="fa-solid fa-share-from-square"></em></button>
 
-            <% is_exist = SavedBlog.find_by(users_id: user['id'], blogs_id: view_blog['id']).nil? %>
+            <% is_exist = SavedBlog.find_by(users_id: user['id'], blogs_id: @view_blog['id']).nil? %>
             <% unless is_exist %>
-            <a href="/delete_saved_blog/<%= view_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-solid fa-bookmark"></em>&nbsp; Saved</button></a>
+            <a href="/delete_saved_blog/<%= @view_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-solid fa-bookmark"></em></button></a>
             <% else %>
-            <a href="/save_blog/<%= view_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-regular fa-bookmark"></em>&nbsp; Save</button></a>
+            <a href="/save_blog/<%= @view_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-regular fa-bookmark"></em></button></a>
             <%end%>
         </div>
     </div>
@@ -121,13 +121,13 @@
             <% end %> &nbsp;
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
             <input type="hidden" name="comment[users_id]" value="<%= user['id'] %>">
-            <input type="hidden" name="comment[blogs_id]" value="<%= view_blog['id'] %>">
+            <input type="hidden" name="comment[blogs_id]" value="<%= @view_blog['id'] %>">
             <input type="text" name="comment[comment_text]" class="w-50" required> &nbsp; &nbsp;
             <button type="submit" class="btn-c">Comment</button>
         </div>
     </form>
     <br>
-    <% Comment.where(blogs_id: $view_blog_id).map do |cur_com| %>
+    <% @comments.map do |cur_com| %>
     <% com_own = User.find(cur_com['users_id']) %>
     <div class="container">
         <div class="d-inline-flex w-100">
@@ -148,3 +148,5 @@
     </div>
     <% end %>
 </div>
+
+<%= javascript_pack_tag 'home.js' %>

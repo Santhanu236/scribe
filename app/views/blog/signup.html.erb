@@ -21,30 +21,31 @@
                 <div class="row">
                   <div class="col-md-6 mb-4">
                     <div class="form-outline">
-                      <input type="text" id="form3Example1" name="user[first_name]" class="form-control" minlength="3" required/>
                       <label class="form-label" for="form3Example1">First name</label>
+                      <input type="text" id="form3Example1" name="user[first_name]" class="form-control" pattern="[a-zA-Z]{2,64}" required/>
                     </div>
                   </div>
                   <div class="col-md-6 mb-4">
                     <div class="form-outline">
-                      <input type="text" id="form3Example2" name="user[last_name]" class="form-control"required/>
                       <label class="form-label" for="form3Example2">Last name</label>
+                      <input type="text" id="form3Example2" name="user[last_name]" class="form-control" pattern="[a-zA-Z]{2,64}" required/>
                     </div>
                   </div>
                 </div>
 
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                  <input type="email" id="form3Example3" name="user[email]" class="form-control" required/>
                   <label class="form-label" for="form3Example3">Email address</label>
+                  <input type="email" id="form3Example3" name="user[email]" class="form-control" required/>
                 </div>
 
                 <!-- Password input -->
                 <div class="form-outline mb-4">
-                  <input type="password" id="new-pw" class="form-control" name="user[password]" minlength="8" required/>
                   <label class="form-label" for="form3Example4">Password</label>
-                  <input type="password" id="confirm-pw" class="form-control" minlength="8" required/>
+                  <input type="password" id="new-pw" class="form-control" name="user[password]" pattern="/^[a-zA-Z0-9!@#\$%\^\&*_=+-]{8,12}$/g" required/>
+                  <br>
                   <label class="form-label" for="form3Example4">Confirm password</label>
+                  <input type="password" id="confirm-pw" class="form-control" pattern="/^[a-zA-Z0-9!@#\$%\^\&*_=+-]{8,12}$/g" required/>
                 </div>
 
                 <div class="float-left">
@@ -62,6 +63,7 @@
                 </p>
                 <% end %>
                 <!-- Submit button -->
+                <button type="submit" id="sub-btn" hidden></button>
                 <button type="button" id="submit-btn" class="btn btn-primary btn-block mb-4">
                   Sign up
                 </button>

@@ -21,9 +21,9 @@
 
                 <div class="form-outline mb-4">
                   <label class="form-label" for="form3Example4">New Password</label>
-                  <input type="password" id="new-pw" class="form-control" name="new_pw" minlength="8" required/>
+                  <input type="password" id="new-pw" class="form-control" name="new_pw" pattern="/^[a-zA-Z0-9!@#\$%\^\&*_=+-]{8,12}$/g" required/>
                   <label class="form-label" for="form3Example4">Confirm password</label>
-                  <input type="password" id="confirm-pw" class="form-control" minlength="8" required/>
+                  <input type="password" id="confirm-pw" class="form-control" pattern="/^[a-zA-Z0-9!@#\$%\^\&*_=+-]{8,12}$/g" required/>
                 </div>
 
                 <div class="float-left">
@@ -33,8 +33,9 @@
                 <p class="text-secondary"><em class="fa-solid fa-circle-info"></em> Try storing your password in a password wallet</p>
                 <!-- Submit button -->
                 <div id="warn-div"></div>
+                <button type="submit" id="sub-btn"></button>
                 <button type="button" id="submit-btn" class="btn btn-primary btn-block mb-4">
-                  Reset
+                  Submit
                 </button>
                 <a href="/"><button type="button" class="btn btn-secondary btn-block mb-4">Cancel</button></a>
               </form>

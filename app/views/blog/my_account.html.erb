@@ -48,7 +48,6 @@
         </div>
     </div>
 </nav>
-<% user_details = User.find(user["id"]) %>
 
 <div class="col d-flex justify-content-center">
     <div class="card">
@@ -69,13 +68,13 @@
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
             <div class="row justify-content-between text-left">
                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">First name</label>
-                    <input type="text" id="fname" name="user[first_name]" value="<%= user_details['first_name'] %>"> </div>
+                    <input type="text" id="fname" name="user[first_name]" value="<%= @user_details['first_name'] %>"> </div>
                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Last name</label>
-                    <input type="text" id="lname" name="user[last_name]" value="<%= user_details['last_name'] %>"> </div>
+                    <input type="text" id="lname" name="user[last_name]" value="<%= @user_details['last_name'] %>"> </div>
             </div>
             <div class="row justify-content-between text-left">
                 <div class="form-group col-12 flex-column d-flex"> <label class="form-control-label px-3">Bio</label>
-                    <input type="text" id="ans" name="user[bio]" value="<%= user_details['bio'] %>"> </div>
+                    <input type="text" id="ans" name="user[bio]" value="<%= @user_details['bio'] %>"> </div>
             </div>
             <br>
             <div class="justify-content-between">

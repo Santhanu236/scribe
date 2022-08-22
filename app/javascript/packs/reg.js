@@ -18,9 +18,8 @@ function check_pass() {
     }
 }
 function submit_signup(){
-
     if(check_pass()){
-        document.getElementById('signup-form').submit();
+        document.getElementById('sub-btn').click();
     } else {
         document.getElementById('warn-div').innerHTML =
         `<p class="text-danger">Passwords do not match</P>`;
@@ -30,3 +29,4 @@ function submit_signup(){
 // event area:
 document.getElementById('show-password').addEventListener("change", show_password);
 document.getElementById('submit-btn').addEventListener('click',submit_signup);
+

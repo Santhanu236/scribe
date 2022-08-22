@@ -50,7 +50,7 @@
 </nav>
 
 <div class="container" id="home-blog-main-div">
-<% Blog.where(users_id: user["id"]).map do |cur_blog| %>
+<% @my_posts.map do |cur_blog| %>
 <% blog_own = User.find(cur_blog["users_id"]) %>
 <div class="container blog-sub-div" >
     <div class="d-inline-flex w-100">
@@ -63,9 +63,9 @@
 
         <a href="/view_user/<%= blog_own['id'] %>" class="blog-user-name"><%= blog_own["first_name"]+" "+ blog_own["last_name"] %></a>
         <div class="blog-tr-btn-div">
-        <a href="/edit_blog/<%= cur_blog['id'] %>"><button class="btn-c"><em class="fa-solid fa-pen"></em> Edit</button></a>
-        <button class="btn-c" onclick="delete_confirm(this)" data-blogid="<%= cur_blog['id'] %>"><em class="fa-solid fa-trash"></em> Delete</button>
-        <a href="/view_blog/<%= cur_blog['id'] %>"><button class="btn-c"><em class="fa-solid fa-folder-open"></em> Open</button></a>
+        <a href="/edit_blog/<%= cur_blog['id'] %>"><button class="btn-c"><em class="fa-solid fa-pen"></em></button></a>
+        <button class="btn-c" onclick="delete_confirm(this)" data-blogid="<%= cur_blog['id'] %>"><em class="fa-solid fa-trash"></em></button>
+        <a href="/view_blog/<%= cur_blog['id'] %>"><button class="btn-c"><em class="fa-solid fa-folder-open"></em></button></a>
         </div>
     </div> <br>
     <div class="d-inline-flex blog-time-div">
@@ -93,23 +93,23 @@
         <div class="col-1">
         <% like_exist = Like.find_by(users_id: user['id'], blogs_id: cur_blog['id']).nil? %>
         <% unless like_exist %>
-        <a href="/delete_liked_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-solid fa-heart text-danger"></em>&nbsp; Liked</button></a>
+        <a href="/delete_liked_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-solid fa-heart text-danger"></em></button></a>
         <% else %>
-        <a href="/like_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-regular fa-heart text-danger"></em>&nbsp; Like</button></a>
+        <a href="/like_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-regular fa-heart text-danger"></em></button></a>
         <% end %>
         </div>
         <% cur_blog_likes = Like.where(blogs_id: cur_blog['id']).length %>
         <div class="col-1"><p class="blog-likes"><%= cur_blog_likes %> likes</p></div>
-        <div class="col-6"></div>
-        <div class="col-4">
-            <a href="/view_blog/<%= cur_blog['id'] %>/#comment-div"><button class="btn-c" type="button"><em class="fa-solid fa-comment"></em>&nbsp;Comment</button></a>
-            <button class="btn-c" type="button"><em class="fa-solid fa-share-nodes"></em> &nbsp;Share</button>
+        <div class="col-8"></div>
+        <div class="col-2">
+            <a href="/view_blog/<%= cur_blog['id'] %>/#comment-div"><button class="btn-c" type="button"><em class="fa-solid fa-comment"></em></button></a>
+            <button class="btn-c" type="button"><em class="fa-solid fa-share-from-square"></em></button>
 
             <% is_exist = SavedBlog.find_by(users_id: user['id'], blogs_id: cur_blog['id']).nil? %>
             <% unless is_exist %>
-            <a href="/delete_saved_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-solid fa-bookmark"></em>&nbsp; Saved</button></a>
+            <a href="/delete_saved_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-solid fa-bookmark"></em></button></a>
             <% else %>
-            <a href="/save_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-regular fa-bookmark"></em>&nbsp; Save</button></a>
+            <a href="/save_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-regular fa-bookmark"></em></button></a>
             <%end%>
         </div>
     </div>
@@ -124,6 +124,8 @@
         <button onclick="hide_del_confirm()" class="btn-c">Cancel</button>
     </div>
 </div>
+<div class="page-box"><%== pagy_nav(@pagy).html_safe %></div>
+
 
 <%= javascript_pack_tag 'home.js' %>
 

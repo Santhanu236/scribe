@@ -48,34 +48,33 @@
         </div>
     </div>
 </nav>
-<% view_user_details = User.find($view_user_id) %>
 <div class="container">
     <div class="card" id="view-user-div">
         <div class="row">
             <div class="col-1">
-                <% if view_user_details['img_url'].nil? %>
+                <% if @view_user_details['img_url'].nil? %>
                 <em class="fa-solid fa-circle-user" id="vu-profile"></em>
                 <% else %>
-                <% view_user_img_path = "/uploads/user/img_url/" + view_user_details["id"].to_s + "/" + view_user_details["img_url"] %>
+                <% view_user_img_path = "/uploads/user/img_url/" + @view_user_details["id"].to_s + "/" + @view_user_details["img_url"] %>
                 <div class="vu-profile-img-div"><img src="<%= view_user_img_path %>" class="user-avatar vu-profile-img" alt="User"></div>
                 <% end %>
             </div>
             <div class="col-5" id="vu-name-div">
-                <p class="h2"><%= view_user_details['first_name']+" "+view_user_details['last_name'] %></p>
-                <p class="h5"><%= view_user_details['bio'] %></p>
+                <p class="h2"><%= @view_user_details['first_name']+" "+@view_user_details['last_name'] %></p>
+                <p class="h5"><%= @view_user_details['bio'] %></p>
             </div>
-            <% n_followers = UserRelationship.where(user: view_user_details['id']).length %>
-            <% n_following = UserRelationship.where(follower: view_user_details['id']).length %>
+            <% n_followers = UserRelationship.where(user: @view_user_details['id']).length %>
+            <% n_following = UserRelationship.where(follower: @view_user_details['id']).length %>
             <div class="col-2 pt-4"><p class="h4"><%= n_followers %></p><p class="text-secondary">Followers</p></div>
             <div class="col-2 pt-4"><p class="h4"><%= n_following %></p><p class="text-secondary">Following</p></div>
             <div class="col-1 pt-4">
-                <% is_following = UserRelationship.find_by(user: view_user_details['id'], follower: user['id']).nil? %>
+                <% is_following = UserRelationship.find_by(user: @view_user_details['id'], follower: user['id']).nil? %>
 
-                <% if user['id'] == view_user_details['id'] %>
+                <% if user['id'] == @view_user_details['id'] %>
                 <%elsif is_following%>
-                <a href="/follow_user/<%= view_user_details['id'] %>"><button class="btn-c">Follow</button></a>
+                <a href="/follow_user/<%= @view_user_details['id'] %>"><button class="btn-c">Follow</button></a>
                 <%else %>
-                <a href="/unfollow/<%= view_user_details['id'] %>"><button class="btn-c"><em class="fa-solid fa-check"></em> Following</button></a>
+                <a href="/unfollow/<%= @view_user_details['id'] %>"><button class="btn-c"><em class="fa-solid fa-check"></em> Following</button></a>
                 <%end%>
             </div>
         </div>
@@ -83,20 +82,18 @@
 </div>
 <div class="container" id="home-blog-main-div">
 
-<% Blog.where(users_id: $view_user_id).map do |cur_blog| %>
-<% blog_own = User.find(cur_blog["users_id"]) %>
-
+<% @view_user_blogs.map do |cur_blog| %>
     <div class="container blog-sub-div" >
         <div class="d-inline-flex mr-3">
-            <% if blog_own["img_url"].nil? %>
+            <% if @blog_own["img_url"].nil? %>
             <em class="fa-solid fa-circle-user" id="user-profile-top"></em>
             <% else %>
-            <% blog_own_img = "/uploads/user/img_url/" + blog_own["id"].to_s + "/" + blog_own["img_url"] %>
+            <% blog_own_img = "/uploads/user/img_url/" + @blog_own["id"].to_s + "/" + @blog_own["img_url"] %>
             <div class="user-avatar-div"><img src="<%= blog_own_img %>" class="blog-user-img user-avatar" alt="User"></div>
             <% end %>
 
-            <p class="blog-user-name"> <%= blog_own["first_name"]+" "+ blog_own["last_name"] %> </p>
-            <a href="/view_blog/<%= cur_blog['id'] %>"><button class="btn-c float-right blog-open-btn"><em class="fa-solid fa-folder-open"></em> Open</button></a>
+            <p class="blog-user-name"> <%= @blog_own["first_name"]+" "+ @blog_own["last_name"] %> </p>
+            <div class="blog-tr-btn-div"><a href="/view_blog/<%= cur_blog['id'] %>"><button class="btn-c float-right blog-open-btn"><em class="fa-solid fa-folder-open"></em></button></a></div>
         </div> <br>
         <div class="d-inline-flex blog-time-div">
             <% blog_date = cur_blog["updated_at"] %>
@@ -123,23 +120,23 @@
             <div class="col-1">
             <% like_exist = Like.find_by(users_id: user['id'], blogs_id: cur_blog['id']).nil? %>
             <% unless like_exist %>
-            <a href="/delete_liked_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-solid fa-heart text-danger"></em>&nbsp; Liked</button></a>
+            <a href="/delete_liked_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-solid fa-heart text-danger"></em></button></a>
             <% else %>
-            <a href="/like_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-regular fa-heart text-danger"></em>&nbsp; Like</button></a>
+            <a href="/like_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-regular fa-heart text-danger"></em></button></a>
             <% end %>
             </div>
             <% cur_blog_likes = Like.where(blogs_id: cur_blog['id']).length %>
             <div class="col-1"><p class="blog-likes"><%= cur_blog_likes %> likes</p></div>
-            <div class="col-6"></div>
-            <div class="col-4">
-                <a href="/view_blog/<%= cur_blog['id'] %>/#comment-div"><button class="btn-c" type="button"><em class="fa-solid fa-comment"></em>&nbsp;Comment</button></a>
-                <button class="btn-c" type="button"><em class="fa-solid fa-share-nodes"></em> &nbsp;Share</button>
+            <div class="col-8"></div>
+            <div class="col-2">
+                <a href="/view_blog/<%= cur_blog['id'] %>/#comment-div"><button class="btn-c" type="button"><em class="fa-solid fa-comment"></em></button></a>
+                <button class="btn-c" type="button"><em class="fa-solid fa-share-nodes"></em></button>
 
                 <% is_exist = SavedBlog.find_by(users_id: user['id'], blogs_id: cur_blog['id']).nil? %>
                 <% unless is_exist %>
-                <a href="/delete_saved_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-solid fa-bookmark"></em>&nbsp; Saved</button></a>
+                <a href="/delete_saved_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-solid fa-bookmark"></em></button></a>
                 <% else %>
-                <a href="/save_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-regular fa-bookmark"></em>&nbsp; Save</button></a>
+                <a href="/save_blog/<%= cur_blog['id'] %>"><button class="btn-c" type="button"><em class="fa-regular fa-bookmark"></em> </button></a>
                 <%end%>
             </div>
         </div>
@@ -147,3 +144,5 @@
 
 <% end %>
 </div>
+
+<div class="page-box"><%== pagy_nav(@pagy).html_safe %></div>

@@ -31,19 +31,17 @@ class HomeController < ApplicationController
   end
 
   def my_blogs
-    if is_user_logged
-      @pagy, @my_posts = pagy(Blog.where(user_id: session[:user_id]))
+      @pagy, @my_posts = pagy(Blog.where(users_id: get_user_id))
       render 'blog/my_blogs'
-    else
-      redirect_to '/'
-    end
   end
 
   def saved
+    @saved_blogs = SavedBlog.where(users_id: get_user_id)
     render 'blog/saved_blogs'
   end
 
   def my_account
+    @user_details = User.find(get_user_id)
     render 'blog/my_account'
   end
 
@@ -52,17 +50,25 @@ class HomeController < ApplicationController
   end
 
   def user_page
-    $view_user_id = params[:vuid]
+    @view_user_details = User.find(params[:vuid])
+    @pagy, @view_user_blogs = pagy(Blog.where(users_id: params[:vuid]))
+    @blog_own = User.find(params[:vuid])
     render 'blog/user_page'
   end
 
   def blog_page
-    $view_blog_id = params[:vbid]
-    render 'blog/blog_page'
+    if is_user_logged
+      @view_blog_id = params[:vbid]
+      @view_blog = Blog.find(params[:vbid])
+      @comments = Comment.where(blogs_id: params[:vbid])
+      render 'blog/blog_page'
+    else
+      redirect_to '/'
+    end
   end
 
   def edit_blog
-    $edit_blog_id = params[:eblog_id]
+    @edit_blog = Blog.find(params[:eblog_id])
     render 'blog/edit_blog'
   end
 
@@ -80,5 +86,10 @@ class HomeController < ApplicationController
     if fb.save
       redirect_to '/home'
     end
+  end
+
+  private
+  def get_user_id
+    session[:user_id]['id']
   end
 end

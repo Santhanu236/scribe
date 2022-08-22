@@ -14,11 +14,12 @@ a{
     width: fit-content;
     height: fit-content;
     border-radius: 10px;
-    
+    margin-left: 45%;
 }
-#read-more{
+.read-more{
     cursor: pointer;
-    columns: blue;
+    color: blue;
+    margin-left: 40px;
 }
 .text-cutting{
     display: -webkit-box;
@@ -183,7 +184,8 @@ a{
     margin-left: -20px;
 }
 .blog-tr-btn-div{
-    margin-left: 800px !important;
+    margin-left: 900px !important;
+
 }
 #my-acc-profile{
     height: 200px;
