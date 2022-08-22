@@ -73,7 +73,7 @@
 
     <div class="row">
         <div class="col-8 blog-content-div">
-            <p class="blog-content"><%= @view_blog["text"] %></p>
+            <p class="blog-content text-cutting" id="blog-text"><%= @view_blog["text"] %></p> <a id="read-more">Read more</a>
         </div>
         <div class="col-4 d-flex justify-content-center">
             <% if @view_blog["img_url"] %>
@@ -150,3 +150,12 @@
 </div>
 
 <%= javascript_pack_tag 'home.js' %>
+<script>
+const text = document.getElementById('blog-text');
+const rm = document.getElementById('read-more');
+
+rm.addEventListener('click', function() {
+    text.classList.toggle("text-cutting");
+    rm.innerText = "Read less";
+})
+</script>

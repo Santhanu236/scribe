@@ -109,7 +109,7 @@
 
         <div class="row">
             <div class="col-8 blog-content-div">
-                <p class="blog-content text-cutting" id="blog-text"><%= cur_blog["text"] %></p> <a class="read-more">Read more</a>
+                <p class="blog-content text-cutting" id="blog-text"><%= cur_blog["text"] %></p>
 
             </div>
             <div class="col-4 d-flex justify-content-center">
@@ -135,7 +135,8 @@
             <div class="col-8"></div>
             <div class="col-2">
                 <a href="/view_blog/<%= cur_blog['id'] %>/#comment-div"><button class="btn-c" type="button"><em class="fa-solid fa-comment"></em></button></a>
-                <button class="btn-c" type="button" id="share-btn" data-url="/view_blog/<%= cur_blog['id'] %>"><em class="fa-solid fa-share-from-square"></em></button>
+                <% cur_url = "/view_blog/" + cur_blog['id'].to_s %>
+                <button class="btn-c" type="button" id="share-btn" onclick="copy('<%= cur_url %>')"><em class="fa-solid fa-share-from-square"></em></button>
 
                 <% is_exist = SavedBlog.find_by(users_id: user['id'], blogs_id: cur_blog['id']).nil? %>
                 <% unless is_exist %>
@@ -153,3 +154,10 @@
 
 
 <%= javascript_pack_tag 'home.js' %>
+<script>
+function copy(inp){
+    const url = window.origin + inp;
+    navigator.clipboard.writeText(url);
+    alert('Blog URL is copied to Clipboard..');
+}
+</script>

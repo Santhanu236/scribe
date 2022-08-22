@@ -22,7 +22,7 @@ class BlogController < ApplicationController
   end
 
   def update_blog
-    update_record = Blog.find($edit_blog_id)
+    update_record = Blog.find(params[:blog][:id])
     update_record.update(params.require(:blog).permit(:title, :category, :description, :text, :img_url))
     redirect_to "/my_blogs"
   end

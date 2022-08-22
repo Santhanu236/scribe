@@ -16,7 +16,7 @@ a{
     border-radius: 10px;
     margin-left: 45%;
 }
-.read-more{
+#read-more{
     cursor: pointer;
     color: blue;
     margin-left: 40px;
@@ -169,6 +169,7 @@ a{
 .blog-img{
     border-radius: 5px;
     width: 300px;
+    height: fit-content;
 }
 .blog-content-div{
     padding-left: 50px;

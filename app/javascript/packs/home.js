@@ -36,24 +36,3 @@ function getFromLs(key) {
     return localStorage.getItem(key);
 }
 document.getElementById('darkSwitch').addEventListener('change', toggle_dark);
-
-//read-more
-let text = document.getElementById('blog-text');
-const rms = document.querySelectorAll('.read-more');
-
-rms.forEach(rm => {
-  rm.addEventListener('click', function () {
-    text.classList.toggle("text-cutting");
-  });
-});
-
-//share
-const share_btn = document.getElementById('share-btn');
-share_btn.addEventListener('click', function() {
-    const url = window.origin + share_btn.dataset.url;
-    navigator.clipboard.writeText(url);
-    alert("Blog URL is copied to Clipboard..");
-});
-
-
-
