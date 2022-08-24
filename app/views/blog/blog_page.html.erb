@@ -113,11 +113,10 @@
     <p class="h3">Comments</p> <br>
     <form action="/create_comment" method="post">
         <div class="d-inline-flex w-100">
-            <% if blog_own["img_url"].nil? %>
+            <% if user["img_url"]['url'].nil? %>
             <a href="/view_user/<%= blog_own['id'] %>"><em class="fa-solid fa-circle-user" id="user-profile-top"></em></a>
             <% else %>
-            <% blog_own_img = "/uploads/user/img_url/" + blog_own["id"].to_s + "/" + blog_own["img_url"] %>
-            <div class="user-avatar-div"><a href="/view_user/<%= blog_own['id'] %>"><img src="<%= blog_own_img %>" class="blog-user-img user-avatar" alt="User"></a></div>
+            <div class="user-avatar-div"><a href="/view_user/<%= blog_own['id'] %>"><img src="<%= user['img_url']['url'] %>" class="blog-user-img user-avatar" alt="User"></a></div>
             <% end %> &nbsp;
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
             <input type="hidden" name="comment[users_id]" value="<%= user['id'] %>">
